@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spillover – Prime Directive Calculator for Your Next Dollar</title>
+<meta name="description" content="Free r/personalfinance Prime Directive calculator. Enter your balances, debts and 401(k) match to see exactly where your next dollar goes and when each step is done." />
+<link rel="canonical" href="https://kylescheer.com/spillover/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Kyle Scheer" />
+<meta property="og:title" content="Spillover – Where your next dollar goes" />
+<meta property="og:description" content="A free r/personalfinance Prime Directive calculator. Which step you're on, exactly what to move today, and when you'll finish. Private, no account." />
+<meta property="og:url" content="https://kylescheer.com/spillover/" />
+<meta property="og:image" content="https://kylescheer.com/spillover/og-spillover.png" />
+<meta property="og:image:alt" content="Spillover: a step-by-step plan showing which Prime Directive step you are on" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#1b2130" />
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Spillover", "url": "https://kylescheer.com/spillover/", "description": "Free r/personalfinance Prime Directive calculator. Enter your balances, debts and 401(k) match to see exactly where your next dollar goes and when each step is done.", "applicationCategory": "FinanceApplication", "operatingSystem": "Any (runs in the browser)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "creator": {"@type": "Person", "name": "Kyle Scheer", "url": "https://kylescheer.com"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the r/personalfinance Prime Directive?", "acceptedAnswer": {"@type": "Answer", "text": "It's the r/personalfinance community's order for spare money: a budget, a starter emergency fund, the full employer 401(k) match, high-interest debt, a full emergency fund, moderate-interest debt, then retirement accounts and other goals. Spillover runs your numbers through that order and fills each step before money spills into the next."}}, {"@type": "Question", "name": "Should I pay off credit card debt or build an emergency fund first?", "acceptedAnswer": {"@type": "Answer", "text": "Both, in order. Keep a starter emergency fund ($1,000 or one month of expenses, whichever is more) so a surprise bill doesn't go back on the card. Then put every extra dollar toward debt at 10% APR or more. Build the full 3–6 month emergency fund after that debt is gone."}}, {"@type": "Question", "name": "How much of my savings should go to debt?", "acceptedAnswer": {"@type": "Answer", "text": "Everything above your starter emergency fund and checking cushion, until debt at 10% APR or more is paid off. Spillover shows the exact transfers to make today: how much goes to each card, highest rate first, using the cash you actually have."}}, {"@type": "Question", "name": "Should I pay off debt or invest?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the interest rate. At 10% or more, pay it off first: it's a guaranteed return that investing can't reliably beat. Between 4% and 10% it's close, and the Prime Directive pays it down after the full emergency fund. Under 4%, pay the minimums and invest. The one exception is the employer match, which comes before any extra debt payments."}}, {"@type": "Question", "name": "Where should my next dollar go after the 401(k) match and emergency fund?", "acceptedAnswer": {"@type": "Answer", "text": "Next come an IRA, any costs you'll have to pay soon, retirement savings up to 15% of pre-tax income, an HSA if you have a high-deductible health plan, a 529 for kids' college, other goals, and finally a taxable brokerage account. Spillover uses each year's IRS contribution limits."}}, {"@type": "Question", "name": "Is Spillover free and private?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. There's no account, no bank login and no tracking. Everything you enter stays in your browser and is never sent to a server. It's a planning tool, not financial advice."}}]}</script>
+<script>try { document.documentElement.dataset.theme = localStorage.getItem("spilloverTheme") || "auto"; } catch (e) { document.documentElement.dataset.theme = "auto"; }</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231b2130'/%3E%3Ctext x='29' y='46' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23fff' text-anchor='middle'%3E$%3C/text%3E%3Ccircle cx='50' cy='46' r='5' fill='%236cb6e8'/%3E%3C/svg%3E" />
+<style>
+  :root {
+    --paper: #f4f0e6; --card: #fffdf7; --ink: #1b2130; --muted: #6d6f78; --line: #e2d9c6;
+    --blue: #2a73bd; --blue-2: #6cb6e8; --blue-bg: #e6f0fa;
+    --red: #c0533a; --red-bg: #f8e3dc; --green: #2e8a58; --green-bg: #e1f1e7; --gold: #c98a1c; --gold-bg: #f7ecd6;
+    --shadow: 0 1px 0 rgba(27,33,48,.04), 0 6px 20px -12px rgba(27,33,48,.25);
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif; --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--paper); color: var(--ink); line-height: 1.45; font-variant-numeric: tabular-nums;
+    background-image: radial-gradient(rgba(27,33,48,.035) 1px, transparent 1px); background-size: 18px 18px; }
+  button, input, select { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  a { color: var(--blue); }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 26px 20px 60px; }
+
+  header.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  .brand h1 { font-family: var(--serif); font-size: clamp(2rem, 4.5vw, 2.7rem); line-height: 1; letter-spacing: -.02em; }
+  .brand h1 span { color: var(--blue); }
+  .brand p { color: var(--muted); margin-top: 6px; max-width: 560px; }
+  .toolbar { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { border: 1.5px solid var(--ink); background: transparent; padding: 8px 14px; border-radius: 999px; font-weight: 600; font-size: .88rem; white-space: nowrap; transition: background .15s, color .15s; }
+  .btn:hover { background: var(--ink); color: var(--paper); }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .btn.ghost { border-color: var(--line); }
+  .btn.small { padding: 5px 11px; font-size: .8rem; }
+  .btn.dashed { border-style: dashed; border-color: #b9ae96; color: var(--muted); width: 100%; }
+  .btn.dashed:hover { color: var(--paper); border-color: var(--ink); }
+
+  .layout { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 24px; align-items: start; }
+  .layout > * { min-width: 0; }   /* let wide children (the timeline) scroll inside their box instead of widening the page */
+
+  /* ---------- inputs ---------- */
+  .inputs { position: sticky; top: 14px; max-height: calc(100vh - 28px); overflow: auto; background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); }
+  .inputs::-webkit-scrollbar { width: 8px; } .inputs::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+  .in-head { padding: 16px 18px 6px; display: flex; justify-content: space-between; align-items: baseline; }
+  .in-head h2 { font-family: var(--serif); font-size: 1.25rem; }
+  .in-head small { color: var(--muted); font-size: .78rem; }
+  details.sec { border-top: 1px solid var(--line); }
+  details.sec > summary { list-style: none; cursor: pointer; padding: 13px 18px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+  details.sec > summary::-webkit-details-marker { display: none; }
+  details.sec > summary .chev { transition: transform .2s; color: var(--muted); }
+  details.sec[open] > summary .chev { transform: rotate(90deg); }
+  details.sec > summary .hint { font-weight: 500; color: var(--muted); font-size: .8rem; margin-left: auto; margin-right: 10px; }
+  .sec-body { padding: 0 18px 16px; display: grid; gap: 10px; }
+  .field label { display: block; font-size: .72rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+  .help, .field .help { font-size: .76rem; color: var(--muted); margin-top: 4px; line-height: 1.35; }
+  .field input, .field select { width: 100%; border: 1.5px solid var(--line); background: #fff; border-radius: 10px; padding: 8px 10px; font-size: .95rem; }
+  input:focus, select:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(42,115,189,.15); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .money, .pct { position: relative; }
+  .money::before { content: "$"; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: .9rem; }
+  .money input { padding-left: 21px; }
+  .pct::after { content: "%"; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: .9rem; }
+  .pct input { padding-right: 24px; }
+  .seg { display: flex; gap: 4px; background: var(--paper); padding: 3px; border-radius: 10px; }
+  .seg button { flex: 1; border: 0; background: none; border-radius: 8px; padding: 7px 8px; font-weight: 600; font-size: .84rem; color: var(--muted); }
+  .seg button.on { background: var(--ink); color: var(--paper); }
+  .sub { display: grid; gap: 10px; padding: 10px; border-radius: 12px; background: var(--paper); }
+  .items { display: grid; gap: 8px; }
+  .linkish { border: 0; background: none; color: var(--blue); text-decoration: underline; font-size: inherit; padding: 0; }
+  .sec-next { display: flex; justify-content: flex-end; gap: 8px; align-items: center; margin-top: 4px; }
+  .sec-next .err { color: var(--red); font-size: .8rem; margin-right: auto; }
+  details.sec > summary .ok { color: var(--green); margin-right: 8px; }
+  .checklist { list-style: none; max-width: 360px; margin: 0 auto 18px; text-align: left; display: grid; gap: 6px; }
+  .checklist li { display: flex; gap: 10px; align-items: center; padding: 8px 12px; border-radius: 10px; background: var(--paper); font-size: .92rem; }
+  .checklist li span { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; background: #fff; border: 1.5px solid var(--line); color: var(--muted); }
+  .checklist li.ok span { background: var(--green); border-color: var(--green); color: #fff; }
+  .checklist li.cur { background: var(--blue-bg); font-weight: 700; }
+  .item { border: 1.5px solid var(--line); border-radius: 12px; padding: 10px; background: #fff; display: grid; gap: 8px; position: relative; }
+  .item .x { position: absolute; top: 4px; right: 6px; border: 0; background: none; font-size: 1.15rem; color: var(--muted); line-height: 1; padding: 2px 6px; }
+  .item .x:hover { color: var(--red); }
+  .item input { border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 8px; font-size: .88rem; width: 100%; background: #fff; }
+  .item .money::before { left: 8px; font-size: .82rem; } .item .money input { padding-left: 18px; }
+  .item .pct::after { right: 8px; font-size: .82rem; }
+  .item .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .item .mini { font-size: .66rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; display: block; }
+  .item .name { font-weight: 600; padding-right: 26px !important; }
+  .item .tag { font-size: .7rem; font-weight: 700; padding: 2px 8px; border-radius: 99px; justify-self: start; }
+  .tag.hi { background: var(--red-bg); color: var(--red); } .tag.mid { background: var(--gold-bg); color: #8b5e12; } .tag.lo { background: var(--green-bg); color: var(--green); }
+  .item .seg button { font-size: .76rem; padding: 5px; }
+
+  /* ---------- results ---------- */
+  .hero { background: var(--ink); color: var(--paper); border-radius: 20px; padding: 22px 24px; position: relative; overflow: hidden; }
+  .hero .k { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: #a9aec0; font-weight: 700; }
+  .hero h2 { font-family: var(--serif); font-size: clamp(1.6rem, 3.4vw, 2.3rem); line-height: 1.1; margin: 6px 0 8px; }
+  .hero h2 .num { color: var(--blue-2); }
+  .hero p { color: #d6d9e3; max-width: 640px; }
+  .hero p b { color: #fff; }
+  .dots { display: flex; gap: 4px; margin-top: 16px; flex-wrap: wrap; }
+  .dots span { height: 6px; flex: 1; min-width: 14px; border-radius: 4px; background: #39415a; }
+  .dots span.done { background: var(--green); } .dots span.now { background: var(--blue-2); } .dots span.skip { background: transparent; border: 1px dashed #4b546e; }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 14px 0 0; }
+  .tile { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; }
+  .tile .k { font-size: .7rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 700; }
+  .tile .v { font-family: var(--serif); font-size: 1.45rem; font-weight: 700; margin-top: 2px; }
+  .tile .s { font-size: .76rem; color: var(--muted); }
+  .warn { background: var(--red-bg); color: #7a2b1a; border-radius: 14px; padding: 12px 14px; margin-top: 14px; font-size: .92rem; }
+
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); padding: 18px 20px; margin-top: 16px; }
+  .card h3 { font-family: var(--serif); font-size: 1.25rem; }
+  .card .lead { color: var(--muted); font-size: .88rem; margin: 2px 0 12px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .acts { list-style: none; display: grid; gap: 6px; }
+  .acts li { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; padding: 9px 11px; border-radius: 12px; background: var(--blue-bg); font-size: .92rem; }
+  .acts li .ic { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: .78rem; font-weight: 700; color: #fff; background: var(--blue); }
+  .acts li.keep { background: var(--green-bg); } .acts li.keep .ic { background: var(--green); }
+  .acts li.pay .ic { background: var(--red); } .acts li.pay { background: #fbeee9; }
+  .acts li.work { background: var(--gold-bg); } .acts li.work .ic { background: var(--gold); }
+  .acts li small { display: block; color: var(--muted); font-size: .76rem; }
+  .acts li b { font-family: var(--serif); font-size: 1.02rem; white-space: nowrap; }
+  .empty { color: var(--muted); font-size: .9rem; padding: 6px 0; }
+
+  /* ladder */
+  .ladder { list-style: none; display: grid; gap: 8px; margin-top: 4px; }
+  .step { display: grid; grid-template-columns: 52px minmax(0,1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; border-radius: 14px; border: 1.5px solid var(--line); background: #fff; }
+  .step.now { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(42,115,189,.12); }
+  .step.done { background: #f7fbf8; }
+  .step.skip { opacity: .5; background: transparent; border-style: dashed; }
+  .badge { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; font-family: var(--serif); font-weight: 700; font-size: 1.05rem; background: var(--paper); color: var(--muted); }
+  .step.now .badge { background: var(--blue); color: #fff; }
+  .step.done .badge { background: var(--green); color: #fff; }
+  .s-title { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-weight: 700; }
+  .chip { font-size: .66rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; background: var(--paper); color: var(--muted); }
+  .chip.now { background: var(--blue-bg); color: var(--blue); } .chip.done { background: var(--green-bg); color: var(--green); }
+  .chip.kind { background: transparent; border: 1px solid var(--line); }
+  .s-why { font-size: .82rem; color: var(--muted); margin-top: 2px; }
+  .bar { height: 7px; border-radius: 99px; background: var(--paper); margin-top: 8px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 99px; background: var(--blue); transition: width .5s; }
+  .step.done .bar i { background: var(--green); }
+  .bar.debt { background: var(--red-bg); } .bar.debt i { background: var(--green); }
+  .s-sub { display: grid; gap: 4px; margin-top: 8px; }
+  .s-sub div { display: flex; justify-content: space-between; font-size: .8rem; color: #3b4152; gap: 10px; }
+  .s-sub div span:last-child { white-space: nowrap; }
+  .s-right { text-align: right; white-space: nowrap; }
+  .s-right .big { font-family: var(--serif); font-weight: 700; font-size: 1.05rem; }
+  .s-right .eta { font-size: .78rem; color: var(--muted); }
+  .s-right .eta b { color: var(--ink); }
+
+  /* timeline */
+  .tl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .tl { width: 100%; min-width: 560px; display: block; }
+  .tl text { font-family: var(--sans); font-size: 11px; fill: var(--muted); }
+  .tl .lbl { fill: var(--ink); font-weight: 600; }
+  .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .78rem; color: var(--muted); margin-top: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+
+  .placeholder { background: var(--card); border: 1.5px dashed #b9ae96; border-radius: 20px; padding: 36px 24px; text-align: center; }
+  .placeholder h2 { font-family: var(--serif); font-size: 1.6rem; margin-bottom: 8px; }
+  .placeholder p { color: var(--muted); max-width: 480px; margin: 0 auto 16px; }
+  .placeholder ol { text-align: left; max-width: 420px; margin: 0 auto 18px; padding-left: 20px; color: #3b4152; font-size: .93rem; }
+
+  .why { margin-top: 28px; }
+  .faq { margin-top: 12px; }
+  .faq h3 { font-size: 1rem; margin: 16px 0 4px; }
+  .faq h3:first-child { margin-top: 0; }
+  .faq p { color: var(--muted); max-width: 70ch; }
+  .why table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  .why th { text-align: left; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1.5px solid var(--ink); }
+  .why td { padding: 8px; border-bottom: 1px dashed var(--line); vertical-align: top; }
+  .why td:first-child { font-family: var(--serif); font-weight: 700; color: var(--muted); white-space: nowrap; }
+  .why td:nth-child(2) { font-weight: 700; }
+  .rule0 { background: var(--ink); color: var(--paper); border-radius: 12px; padding: 12px 14px; margin: 12px 0; font-size: .92rem; }
+  .rule0 b { color: var(--blue-2); }
+  .bends { list-style: none; display: grid; gap: 6px; margin-top: 8px; }
+  .bends li { background: var(--paper); border-radius: 10px; padding: 9px 12px; font-size: .88rem; color: #3b4152; }
+  .fine { font-size: .76rem; color: var(--muted); margin-top: 12px; }
+  footer { margin-top: 30px; text-align: center; color: var(--muted); font-size: .84rem; }
+  footer a { color: var(--ink); } footer p { margin-bottom: 5px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  :focus-visible { outline: 2.5px solid var(--blue); outline-offset: 2px; }
+  .brand .us { display: inline-block; font-size: .82rem; font-weight: 600; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 1px 9px; margin-top: 4px; }
+  .warn ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+  .s-sub div.late { color: var(--red); font-weight: 600; }
+  .dwarn { font-size: .74rem; color: var(--red); font-weight: 600; }
+  .dwarn:empty { display: none; }
+  .due { display: flex; gap: 6px; align-items: center; }
+  .due select { border: 1.5px solid var(--line); border-radius: 8px; padding: 6px 8px; font-size: .85rem; background: #fff; flex: 1; min-width: 0; }
+  .limbox { background: var(--paper); border-radius: 10px; padding: 8px 10px; }
+  input.nudge { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(201,138,28,.18) !important; }
+  .print-only { display: none; }
+  @media print {
+    @page { margin: 14mm; }
+    body { background: #fff; }
+    .wrap { padding: 0; max-width: none; }
+    .toolbar, .inputs, footer, .why .bends, .toast, .did, .placeholder button { display: none !important; }
+    .layout { display: block; }
+    .print-only { display: block; }
+    .print-head { font-size: 11px; color: #333; margin-bottom: 10px; line-height: 1.5; }
+    .hero, .dots span, .badge, .bar i, .acts li .ic, .tl rect { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .card { box-shadow: none; margin-top: 10px; padding: 12px 14px; }
+    .hero, .tiles, .step, .acts li, .cols .card, .card:has(.tl) { break-inside: avoid; }
+    .why, .whatif { display: none; }
+    .brand p { display: none; }
+    .tiles { grid-template-columns: repeat(4, 1fr) !important; }
+    .cols { grid-template-columns: 1fr 1fr !important; }
+    .step { grid-template-columns: 46px minmax(0,1fr) auto !important; padding: 8px 12px; }
+    .badge { width: 40px; height: 40px; }
+    .s-right { grid-column: auto !important; display: block !important; text-align: right !important; }
+    .hero { padding: 16px 20px; }
+    .tl { min-width: 0; }
+    a { color: inherit; text-decoration: none; }
+  }
+  .addition { margin-top: 14px; background: var(--gold-bg); border-radius: 12px; padding: 11px 14px; font-size: .9rem; color: #5c4210; }
+  .wi-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 12px; }
+  .wi-controls label { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; font-weight: 700; font-size: .9rem; }
+  .wi-controls label span { grid-column: 1; font-weight: 500; color: var(--muted); font-size: .78rem; }
+  .wi-controls label b { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-family: var(--serif); font-size: 1.15rem; color: var(--blue); }
+  .wi-controls input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--blue); margin-top: 6px; }
+  table.wi { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  table.wi th { text-align: left; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); padding: 6px 8px; border-bottom: 1.5px solid var(--ink); }
+  table.wi td { padding: 8px; border-bottom: 1px dashed var(--line); }
+  table.wi td:first-child { font-weight: 600; }
+  .good { color: var(--green); font-weight: 700; } .bad { color: var(--red); font-weight: 700; }
+  @media (max-width: 620px) { .wi-controls { grid-template-columns: 1fr; } }
+  /* ---------- index5: calmer layout ---------- */
+  #app { max-width: 760px; margin: 0 auto; }
+  header.top { max-width: 760px; margin: 0 auto 22px; flex-wrap: nowrap; align-items: flex-start; }
+  header.top .toolbar { flex-shrink: 0; padding-top: 6px; }
+  @media (max-width: 620px) { header.top { flex-wrap: wrap; } }
+  .brand h1 { font-size: clamp(1.8rem, 4vw, 2.3rem); }
+  .brand p { font-size: .95rem; }
+  .menu { position: relative; }
+  .menu-list { position: absolute; right: 0; top: calc(100% + 6px); background: var(--card); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; min-width: 210px; z-index: 30; display: none; }
+  .menu-list.open { display: block; }
+  .menu-list button { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 9px 12px; border-radius: 8px; font-size: .92rem; }
+  .menu-list button:hover { background: var(--paper); }
+  .menu-list hr { border: 0; border-top: 1px solid var(--line); margin: 4px 0; }
+
+  .screen { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow); padding: 26px 28px 22px; max-width: 560px; margin: 0 auto; }
+  .screen h2 { font-family: var(--serif); font-size: clamp(1.45rem, 3.4vw, 1.8rem); line-height: 1.15; margin-top: 14px; }
+  .screen .qsub { color: var(--muted); margin: 6px 0 18px; }
+  .screen .fields { display: grid; gap: 14px; }
+  .screen .field input { font-size: 1.05rem; padding: 11px 12px; }
+  .screen .money::before { left: 12px; } .screen .money input { padding-left: 24px; }
+  .opt { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--muted); margin-left: 4px; }
+  .progress { display: flex; align-items: center; gap: 12px; font-size: .78rem; color: var(--muted); font-weight: 600; }
+  .pbar { flex: 1; height: 6px; background: var(--paper); border-radius: 99px; overflow: hidden; }
+  .pbar i { display: block; height: 100%; background: var(--blue); border-radius: 99px; transition: width .3s; }
+  .jump { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+  .jump button { border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 4px 10px; font-size: .78rem; font-weight: 600; color: var(--muted); }
+  .jump button.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  details.more { margin-top: 16px; border-top: 1px dashed var(--line); padding-top: 10px; }
+  details.more > summary, details.item-more > summary { cursor: pointer; color: var(--blue); font-weight: 600; font-size: .9rem; list-style: none; }
+  details.more > summary::before, details.item-more > summary::before { content: "+ "; }
+  details.more[open] > summary::before, details.item-more[open] > summary::before { content: "− "; }
+  details.more > .fields { margin-top: 12px; }
+  details.item-more > summary { font-size: .8rem; }
+  details.item-more > .row2 { margin-top: 8px; }
+  .screen .err { color: var(--red); font-size: .88rem; min-height: 1.2em; margin-top: 10px; }
+  .nav { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+  .nav .grow { flex: 1; }
+  .nav .btn.solid { padding: 10px 20px; font-size: .95rem; }
+  .privacy { text-align: center; font-size: .8rem; color: var(--muted); margin-top: 16px; }
+
+  .hero .k { margin-bottom: 2px; }
+  .hero h2 { margin: 4px 0 6px; }
+  .facts { display: flex; gap: 28px; margin-top: 16px; flex-wrap: wrap; }
+  .facts div { display: grid; }
+  .facts span { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: #a9aec0; font-weight: 700; }
+  .facts b { font-family: var(--serif); font-size: 1.5rem; color: var(--blue-2); }
+  .keep-line { font-size: .86rem; color: var(--muted); margin-top: 10px; }
+  .keep-line b { color: var(--ink); }
+  .lead.small { font-size: .8rem; margin: 10px 0 0; }
+  ol.path { list-style: none; display: grid; gap: 2px; }
+  .p { display: grid; grid-template-columns: 34px minmax(0,1fr) auto; gap: 12px; align-items: start; padding: 9px 6px; border-radius: 12px; }
+  .pdot { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font-family: var(--serif); font-weight: 700; font-size: .85rem; background: var(--paper); color: var(--muted); }
+  .p.done .pdot { background: var(--green); color: #fff; }
+  .p.done .ptitle { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(0,0,0,.2); }
+  .p.now { background: var(--blue-bg); padding: 12px 10px; }
+  .p.now .pdot { background: var(--blue); color: #fff; }
+  .ptitle { font-weight: 700; padding-top: 5px; }
+  .pwhen { font-size: .8rem; color: var(--muted); white-space: nowrap; padding-top: 6px; }
+  .cur-detail { margin-top: 6px; font-size: .88rem; color: #3b4152; }
+  .cur-detail .big { font-family: var(--serif); font-weight: 700; font-size: 1.15rem; color: var(--ink); margin-top: 4px; }
+  .cur-detail .bar { background: #fff; }
+  .cur-detail .meta { margin-top: 6px; }
+  details.fold { margin-top: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; }
+  details.fold > summary { cursor: pointer; padding: 15px 18px; font-family: var(--serif); font-weight: 700; font-size: 1.08rem; list-style: none; display: flex; justify-content: space-between; }
+  details.fold > summary::after { content: "+"; color: var(--muted); font-family: var(--sans); }
+  details.fold[open] > summary::after { content: "−"; }
+  .fold-body { padding: 0 18px 18px; }
+  .fold-body > .card { border: 0; box-shadow: none; padding: 0; margin: 0; background: none; }
+  .fold-body > .card > h3 { display: none; }
+  details.why { max-width: 760px; margin: 28px auto 0; }
+  details.why table { width: 100%; }
+  body.in-setup details.why { display: none; }
+  @media (max-width: 620px) {
+    .screen { padding: 20px 16px 18px; border-radius: 16px; }
+    .p { grid-template-columns: 30px minmax(0,1fr); }
+    .pwhen { grid-column: 2; padding-top: 0; }
+    .facts { gap: 18px; }
+  }
+  @media print {
+    #inputs, .fold > summary::after { display: none !important; }
+    details.why { display: none !important; }
+    .fold-body { padding: 0; }
+    details.fold { border: 0; }
+    details.fold[data-fold="whatif"] { display: none; }
+  }
+  .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%) translateY(140%); background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 99px; font-weight: 600; font-size: .9rem; transition: transform .25s; z-index: 50; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast:not(.show) { visibility: hidden; transition: transform .25s, visibility 0s .25s; }
+
+  @media (max-width: 980px) {
+    .layout { grid-template-columns: 1fr; }
+    .inputs { position: static; max-height: none; }
+    .tiles { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 620px) {
+    .wrap { padding: 18px 12px 50px; }
+    .cols { grid-template-columns: 1fr; }
+    .step { grid-template-columns: 40px minmax(0,1fr); }
+    .badge { width: 38px; height: 38px; font-size: .92rem; }
+    .s-right { grid-column: 2; text-align: left; display: flex; flex-wrap: wrap; gap: 2px 10px; align-items: baseline; white-space: normal; }
+    .hero { padding: 18px; }
+  }
+
+  /* ================= v6: banknote green ================= */
+  :root {
+    --paper: #F5F7F4; --card: #FFFFFF; --ink: #14211B; --muted: #5E6B64; --line: #DCE4DE;
+    --blue: #1E5B45; --blue-2: #A7D8BF; --blue-bg: #E7F1EB;
+    --note: #163A2C; --brass: #B98A2E; --gold: #B98A2E; --gold-bg: #F6EEDC;
+    --red: #B4472F; --red-bg: #F8E7E1; --green: #2F7D58; --green-bg: #E4F1E9;
+    --serif: "Avenir Next", Avenir, "Segoe UI Variable Display", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --sans: "Avenir Next", Avenir, "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  body { background: var(--paper); background-image: none; color: var(--ink); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  ::selection { background: var(--blue-2); }
+  .brand h1 { font-weight: 700; letter-spacing: -.035em; font-size: clamp(1.7rem, 3.6vw, 2.1rem); }
+  .brand h1 span { color: var(--brass); }
+  .brand p { color: var(--muted); max-width: 520px; }
+  .brand .us { background: transparent; border-color: var(--line); color: var(--muted); font-weight: 600; }
+  a { color: var(--blue); text-underline-offset: 2px; }
+
+  .btn { border-width: 1.5px; font-weight: 600; letter-spacing: -.005em; padding: 9px 16px; }
+  .btn.solid { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .btn.solid:hover { background: var(--note); border-color: var(--note); }
+  .btn.ghost { border-color: var(--line); background: var(--card); }
+  .btn.ghost:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .btn.dashed { border: 1.5px dashed var(--line); background: transparent; color: var(--blue); font-weight: 600; }
+  .btn.dashed:hover { border-color: var(--blue); background: var(--blue-bg); color: var(--blue); }
+  .linkish { color: var(--blue); font-weight: 600; }
+  :focus-visible { outline: 2.5px solid var(--brass); outline-offset: 2px; }
+
+  /* labels: sentence case, not shouted */
+  .field label, .item .mini, .wi-controls label span { text-transform: none; letter-spacing: 0; }
+  .field label { font-size: .9rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .item .mini { font-size: .76rem; font-weight: 600; color: var(--muted); }
+  .help { color: var(--muted); }
+  .field input, .field select, .item input, .due select { border: 1.5px solid var(--line); border-radius: 10px; background: #fff; }
+  input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(30,91,69,.12); }
+  .seg { background: #EEF2EF; border-radius: 10px; }
+  .seg button { border-radius: 8px; color: var(--muted); }
+  .seg button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(20,33,27,.12), 0 0 0 1px var(--line); }
+  .item { border: 1px solid var(--line); border-radius: 14px; background: #FBFCFB; }
+  .tag { font-weight: 600; letter-spacing: 0; }
+
+  /* the shared step track (setup progress and plan header) */
+  .track { display: flex; gap: 4px; flex: 1; }
+  .track i { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+  .track i.done { background: var(--blue); }
+  .track i.now { background: var(--brass); }
+
+  /* setup */
+  .screen { border: 1px solid var(--line); box-shadow: 0 1px 0 rgba(20,33,27,.03), 0 24px 48px -32px rgba(20,33,27,.28); border-radius: 22px; padding: 30px 32px 24px; }
+  .screen h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -.03em; font-size: clamp(1.6rem, 3.6vw, 2rem); line-height: 1.12; margin-top: 18px; }
+  .screen .qsub { font-size: 1rem; }
+  .progress { font-weight: 600; color: var(--muted); }
+  .screen .field input { font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+  .opt { font-weight: 500; }
+  details.more { border-top: 1px solid var(--line); }
+  /* "More options" sits indented under its section, with a rail tying the extra fields to it */
+  details.more { margin-left: 14px; }
+  details.more > .fields { padding-left: 12px; border-left: 2px solid var(--line); }
+  .jump button { border-color: var(--line); }
+  .jump button.on { background: var(--blue); border-color: var(--blue); }
+
+  /* plan header: the instruction, on banknote green with engraving lines */
+  .hero { background-color: var(--note); color: #EFF5F1; border-radius: 22px; padding: 30px 32px 24px; position: relative; overflow: hidden; isolation: isolate;
+    background-image:
+      repeating-radial-gradient(circle at 112% -20%, rgba(255,255,255,.055) 0 1px, transparent 1px 9px),
+      repeating-radial-gradient(circle at -15% 130%, rgba(255,255,255,.04) 0 1px, transparent 1px 11px); }
+  .hero .kicker { color: var(--blue-2); font-weight: 600; font-size: .95rem; margin: 0; }
+  .hero h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -.035em; font-size: clamp(1.9rem, 5vw, 2.9rem); line-height: 1.06; margin: 10px 0 12px; color: #fff; max-width: 17ch; text-wrap: balance; }
+  .hero-sub { color: #CFE0D6; font-size: 1.02rem; margin: 0; max-width: 52ch; }
+  .track.big { margin-top: 22px; }
+  .track.big i { height: 6px; background: rgba(255,255,255,.16); }
+  .track.big i.done { background: var(--blue-2); }
+  .track.big i.now { background: var(--brass); box-shadow: 0 0 0 3px rgba(185,138,46,.25); }
+  .track-note { font-size: .8rem; color: #9FB8AA; margin: 8px 0 0; }
+
+  .warn { background: var(--gold-bg); color: #5B4513; border-radius: 14px; border-left: 4px solid var(--brass); }
+
+  /* today + each month share one quiet panel */
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; box-shadow: none; }
+  .card h3 { font-family: var(--serif); font-weight: 700; letter-spacing: -.02em; font-size: 1.15rem; }
+  .cols.duo { gap: 0; background: var(--card); border: 1px solid var(--line); border-radius: 18px; margin-top: 16px; overflow: hidden; }
+  .cols.duo > .card { border: 0; border-radius: 0; margin: 0; padding: 20px 22px; }
+  .cols.duo > .card + .card { border-left: 1px solid var(--line); }
+  .did { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+  .did span { font-size: .85rem; color: var(--muted); }
+  .toast-act { margin-left: 10px; background: none; border: 0; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; padding: 0; }
+  .cols.duo.solo { grid-template-columns: 1fr !important; }   /* "Do this today" alone, full width (screen + print) */
+  .acts { gap: 0; margin-top: 8px; }
+  .acts li { grid-template-columns: 1fr auto; background: none !important; border-radius: 0; padding: 11px 0 11px 14px; border-bottom: 1px solid var(--line); position: relative; }
+  .acts li:last-child { border-bottom: 0; }
+  .acts li::before { content: ""; position: absolute; left: 0; top: 13px; bottom: 13px; width: 3px; border-radius: 2px; background: var(--blue); }
+  .acts li.pay::before { background: var(--red); }
+  .acts li.work::before { background: var(--brass); }
+  .acts li .ic { display: none; }
+  .acts li b { font-family: var(--serif); font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .keep-line { border-top: 1px dashed var(--line); padding-top: 10px; }
+
+  /* the path: a rail with stations */
+  ol.path { position: relative; gap: 0; margin-top: 6px; }
+  ol.path::before { content: ""; position: absolute; left: 14px; top: 22px; bottom: 22px; width: 2px; background: var(--line); }
+  .p { grid-template-columns: 30px minmax(0,1fr) auto; padding: 8px 0; background: none; position: relative; }
+  .pdot { width: 30px; height: 30px; border-radius: 50%; background: #fff; border: 2px solid var(--line); color: var(--muted); font-family: var(--sans); font-size: .72rem; position: relative; z-index: 1; }
+  .p.done .pdot { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .p.done .ptitle { text-decoration: none; color: var(--muted); font-weight: 500; }
+  .p.now { background: none; padding: 8px 0; }
+  .p.now .pdot { background: #fff; border-color: var(--brass); color: var(--ink); box-shadow: 0 0 0 4px rgba(185,138,46,.18); }
+  .p.now .pmain { background: var(--blue-bg); border-radius: 14px; padding: 12px 14px; margin-top: -4px; }
+  .p.now .pwhen { display: none; }
+  .ptitle { font-weight: 600; padding-top: 4px; }
+  .pinfo { font-size: .84rem; color: var(--muted); margin: 2px 0 0; line-height: 1.45; }
+  .p.done .pinfo { opacity: .85; }
+  .ptime { color: var(--ink); opacity: .7; }
+  .here { font-size: .78rem; font-weight: 600; color: var(--brass); margin-left: 6px; }
+  .pwhen { font-variant-numeric: tabular-nums; }
+  .cur-detail .big { font-family: var(--serif); letter-spacing: -.01em; }
+  .bar { background: #fff; height: 6px; }
+  .bar i { background: var(--blue); }
+  .bar.debt i { background: var(--blue); }
+
+  /* folds: plain rows, not more cards */
+  details.fold { background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0; margin-top: 0; }
+  details.fold:last-of-type { border-bottom: 1px solid var(--line); }
+  #results > details.fold:first-of-type { margin-top: 18px; }
+  details.fold > summary { font-family: var(--sans); font-weight: 600; font-size: 1rem; padding: 16px 2px; }
+  .fold-body { padding: 0 2px 18px; }
+  details.why { border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: none; border-radius: 0; }
+  details.why > summary { font-family: var(--sans); font-weight: 600; font-size: 1rem; padding: 16px 2px; }
+  .why th { text-transform: none; letter-spacing: 0; font-size: .8rem; }
+  .why td:first-child { font-family: var(--sans); }
+  .rule0 { background: var(--note); }
+  .addition { background: var(--gold-bg); }
+  .wi-controls label b, .facts b { font-family: var(--serif); color: var(--blue); }
+  table.wi th { text-transform: none; letter-spacing: 0; font-size: .8rem; }
+  .wi-controls input[type=range] { accent-color: var(--blue); }
+  .tl .lbl { fill: var(--ink); }
+  footer { color: var(--muted); }
+  .toast { background: var(--note); }
+
+  @media (max-width: 620px) {
+    .hero { padding: 22px 20px 18px; border-radius: 18px; }
+    .screen { padding: 22px 18px 18px; }
+    .cols.duo { grid-template-columns: 1fr; }
+    .cols.duo > .card + .card { border-left: 0; border-top: 1px solid var(--line); }
+    .p { grid-template-columns: 30px minmax(0,1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  @media print {
+    .hero { background-image: none; }
+    .cols.duo { break-inside: avoid; }
+  }
+
+  /* ================= sidebar + intro ================= */
+  body.side-layout header.top { max-width: 1180px; }
+  body.side-layout #app { max-width: 1180px; display: grid; grid-template-columns: 360px minmax(0, 1fr); gap: 24px; align-items: start; }
+  body.side-railed #app { grid-template-columns: 52px minmax(0, 1fr); max-width: 900px; }
+  body.side-railed header.top { max-width: 900px; }
+  body.side-railed .side { padding: 0; border-radius: 14px; overflow: hidden; }
+  .rail { width: 100%; border: 0; background: var(--card); color: var(--muted); display: grid; justify-items: center; gap: 12px; padding: 14px 0 16px; cursor: pointer; }
+  .rail span { writing-mode: vertical-rl; transform: rotate(180deg); font-weight: 600; font-size: .85rem; letter-spacing: .01em; }
+  .rail:hover { color: var(--blue); background: var(--blue-bg); }
+  .icon-btn { width: 32px; height: 32px; border-radius: 9px; border: 1px solid var(--line); background: var(--card); color: var(--muted); display: grid; place-items: center; cursor: pointer; }
+  .icon-btn:hover { color: var(--ink); border-color: var(--muted); }
+  body.side-layout #app > * { min-width: 0; }
+  .side { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px 18px; }
+  body.side-layout .side { position: sticky; top: 14px; max-height: calc(100vh - 28px); overflow: auto; overscroll-behavior: contain; }
+  .side-head { display: flex; justify-content: space-between; align-items: center; }
+  .side-head h2 { font-family: var(--serif); font-weight: 700; letter-spacing: -.02em; font-size: 1.2rem; }
+  .btn.small { padding: 5px 12px; font-size: .82rem; }
+  .side-note { font-size: .8rem; color: var(--muted); margin: 2px 0 10px; }
+  details.ss { border-top: 1px solid var(--line); }
+  details.ss > summary { list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 10px; padding: 12px 0; }
+  details.ss > summary::-webkit-details-marker { display: none; }
+  details.ss > summary::before { content: "+"; width: 12px; color: var(--muted); font-weight: 600; }
+  details.ss[open] > summary::before { content: "−"; }
+  .ss-t { font-weight: 600; }
+  .ss-sum { margin-left: auto; font-size: .82rem; color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  details.ss > .fields { display: grid; gap: 12px; padding: 0 0 16px; }
+  .side .field label { font-size: .84rem; }
+  .side .item .grid3 { grid-template-columns: 1fr 1fr; }
+  .side .item .grid3 > div:last-child { grid-column: 1 / -1; }
+  .side-redo { margin-top: 12px; font-size: .85rem; }
+  .scrim { position: fixed; inset: 0; background: rgba(8,14,11,.45); z-index: 55; }
+  @media (max-width: 999px) {
+    .side { position: fixed; top: 0; bottom: 0; left: 0; width: min(440px, 92vw); z-index: 60; border-radius: 0 18px 18px 0; overflow: auto; overscroll-behavior: contain; box-shadow: 0 20px 60px rgba(0,0,0,.3); animation: slidein .22s ease-out; }
+    body.drawer-open { overflow: hidden; }
+    @keyframes slidein { from { transform: translateX(-100%); } }
+  }
+  @media (prefers-reduced-motion: reduce) { .side { animation: none; } }
+  .screen.intro h2 { margin-top: 0; font-size: clamp(1.8rem, 4.2vw, 2.3rem); }
+  .lede { font-size: 1.05rem; color: var(--text-2); margin: 12px 0 18px; line-height: 1.55; }
+  ol.how { list-style: none; counter-reset: how; display: grid; gap: 10px; margin: 0 0 18px; padding: 0; }
+  ol.how li { counter-increment: how; display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: baseline; color: var(--text-2); }
+  ol.how li::before { content: counter(how); width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-weight: 700; font-size: .8rem; color: var(--blue); }
+  ol.how li b { color: var(--ink); }
+  .need { font-size: .9rem; color: var(--muted); background: var(--blue-bg); border-radius: 12px; padding: 10px 14px; margin-bottom: 16px; }
+  @media print { .side, .scrim { display: none !important; } body.side-layout #app { display: block; } }
+
+  /* ================= themes =================
+     Light values match the design above; dark is "banknote at night".
+     Colours that were written directly into rules go through variables here so both themes work. */
+  :root {
+    --field: #fff; --raised: #fff; --sunk: #EEF2EF; --item: #FBFCFB; --text-2: #3b4152;
+    --warn-ink: #5B4513; --add-ink: #5c4210; --tag-mid: #8b5e12; --on-primary: #fff; --sel: #A7D8BF; --hero-edge: transparent;
+    color-scheme: light;
+  }
+  :root[data-theme="dark"] { --paper: #0D1511; --card: #141E19; --ink: #E4ECE7; --muted: #8FA197; --line: #26352D;
+    --blue: #6CC197; --blue-2: #A7D8BF; --blue-bg: #18291F; --note: #173D2E;
+    --brass: #D9AA4E; --gold: #D9AA4E; --gold-bg: #2A2416; --red: #E3826B; --red-bg: #2C1B16; --green: #6CC197; --green-bg: #16261D;
+    --field: #0F1814; --raised: #1D2A23; --sunk: #0F1814; --item: #111B16; --text-2: #C3D0C8;
+    --warn-ink: #EBD3A0; --add-ink: #EBD3A0; --tag-mid: #E7C27A; --on-primary: #0D1511; --sel: #2F6B52; --hero-edge: #24503F;
+    color-scheme: dark; }
+  @media (prefers-color-scheme: dark) { :root[data-theme="auto"] { --paper: #0D1511; --card: #141E19; --ink: #E4ECE7; --muted: #8FA197; --line: #26352D;
+    --blue: #6CC197; --blue-2: #A7D8BF; --blue-bg: #18291F; --note: #173D2E;
+    --brass: #D9AA4E; --gold: #D9AA4E; --gold-bg: #2A2416; --red: #E3826B; --red-bg: #2C1B16; --green: #6CC197; --green-bg: #16261D;
+    --field: #0F1814; --raised: #1D2A23; --sunk: #0F1814; --item: #111B16; --text-2: #C3D0C8;
+    --warn-ink: #EBD3A0; --add-ink: #EBD3A0; --tag-mid: #E7C27A; --on-primary: #0D1511; --sel: #2F6B52; --hero-edge: #24503F;
+    color-scheme: dark; } }
+
+  ::selection { background: var(--sel); }
+  .field input, .field select, .item input, .due select, .jump button { background: var(--field); color: var(--ink); }
+  .seg { background: var(--sunk); }
+  .seg button.on { background: var(--raised); }
+  .item { background: var(--item); }
+  .pdot, .p.now .pdot { background: var(--raised); }
+  .bar, .cur-detail .bar { background: var(--field); }
+  .btn.solid, .p.done .pdot { color: var(--on-primary); }
+  .btn.solid:hover { color: #EFF5F1; }
+  .btn.ghost:hover { color: var(--paper); }
+  .s-sub div, .cur-detail, .bends li, .placeholder ol { color: var(--text-2); }
+  .warn { color: var(--warn-ink); }
+  .addition { color: var(--add-ink); }
+  .tag.mid { color: var(--tag-mid); }
+  .toast, .rule0 { color: #EFF5F1; }
+  .hero { box-shadow: inset 0 0 0 1px var(--hero-edge); }
+  .screen { box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 24px 48px -32px rgba(0,0,0,.35); }
+  body, .card, .screen, .cols.duo, .field input, .seg button, .item { transition: background-color .2s, color .2s, border-color .2s; }
+  .btn.icon { width: 40px; height: 40px; padding: 0; display: inline-grid; place-items: center; font-size: 1.05rem; line-height: 1; }
+  @media print { :root, :root[data-theme] {
+    --paper: #fff; --card: #fff; --ink: #14211B; --muted: #5E6B64; --line: #DCE4DE;
+    --blue: #1E5B45; --blue-2: #A7D8BF; --blue-bg: #E7F1EB; --note: #163A2C; --brass: #B98A2E; --gold: #B98A2E; --gold-bg: #F6EEDC;
+    --red: #B4472F; --red-bg: #F8E7E1; --green: #2F7D58; --green-bg: #E4F1E9;
+    --field: #fff; --raised: #fff; --sunk: #EEF2EF; --item: #FBFCFB; --text-2: #3b4152;
+    --warn-ink: #5B4513; --add-ink: #5c4210; --tag-mid: #8b5e12; --on-primary: #fff; --hero-edge: transparent; color-scheme: light; }
+    * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Spillover<span>.</span></h1>
+      <p>Where should your next dollar go? Enter your real balances and get a step-by-step plan based on the <a href="https://www.reddit.com/r/personalfinance/wiki/commontopics/" target="_blank" rel="noopener">r/personalfinance Prime Directive</a>. <span class="us">For US savers</span></p>
+    </div>
+    <div class="toolbar">
+      <button class="btn ghost icon" data-act="theme" id="themeBtn" type="button"></button>
+      <button class="btn solid" data-act="edit" id="editBtn" hidden>Edit my numbers</button>
+      <div class="menu">
+        <button class="btn ghost" data-act="menu" aria-haspopup="true" aria-expanded="false">More ▾</button>
+        <div class="menu-list" id="menu" role="menu">
+          <button data-act="example" role="menuitem">Load an example</button>
+          <button data-act="print" role="menuitem">Print / save as PDF</button>
+          <button data-act="redo" role="menuitem">Go through the questions again</button>
+          <hr/>
+          <button data-act="export" role="menuitem">Save a backup file</button>
+          <button data-act="import" role="menuitem">Open a backup file</button>
+          <hr/>
+          <button data-act="reset" role="menuitem" style="color:var(--red)">Start over</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <noscript><p class="lead" style="margin:16px 0">Spillover needs JavaScript to run the calculator. The order it follows, and answers to common questions, are below.</p></noscript>
+  <main id="app">
+    <section id="inputs" class="setup" aria-label="Setup questions"></section>
+    <aside id="side" class="side" aria-label="Your numbers" hidden></aside>
+    <section id="results"></section>
+  </main>
+  <div class="scrim" id="scrim" data-act="side-close" hidden></div>
+
+  <details class="fold why" id="why">
+    <summary>Why this order? The Prime Directive, explained</summary>
+    <div class="fold-body">
+    <p class="lead">This is the r/personalfinance Prime Directive, using its own step numbers. The same backbone shows up in The Money Guy Show's <a href="https://moneyguy.com/guide/foo/" target="_blank" rel="noopener">Financial Order of Operations</a> and the <a href="https://www.bogleheads.org/wiki/Prioritizing_investments" target="_blank" rel="noopener">Bogleheads guide</a>: small cushion, free match, kill expensive debt, full emergency fund, then invest.</p>
+    <div class="rule0"><b>Rule zero:</b> bills and the minimum payment on every debt come first, every month, on autopay. Everything here is about your <b>extra</b> money.</div>
+    <table>
+      <thead><tr><th>Step</th><th>What</th><th>Why it sits here</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td>Budget</td><td>You can't direct extra money until you know how much there is: take-home pay minus essentials and minimums.</td></tr>
+        <tr><td>1</td><td>Starter emergency fund</td><td>$1,000 or one month of expenses, whichever is more, so a flat tire doesn't go on a credit card.</td></tr>
+        <tr><td>2</td><td>Employer match</td><td>A 50–100% instant return. Contribute enough to get the full match, and nothing more yet.</td></tr>
+        <tr><td>3a</td><td>High-interest debt (10%+)</td><td>Paying off a 22% card is a guaranteed, tax-free 22% return. Highest rate first (avalanche) saves the most; smallest balance first (snowball) gives quicker wins.</td></tr>
+        <tr><td>3b</td><td>Full emergency fund</td><td>3–6 months of expenses, so a job loss doesn't put you back in debt.</td></tr>
+        <tr><td>3c</td><td>Moderate-interest debt (4–10%)</td><td>Roughly a coin flip against investing; paying it is the guaranteed choice. Under 4%: minimums only.</td></tr>
+        <tr><td>4a</td><td>IRA</td><td>Yearly limit (<span data-lim="ira"></span>). Unused room is gone for good.</td></tr>
+        <tr><td>4b</td><td>Required upcoming costs</td><td>Things you'll have to pay soon no matter what: a certification, a car you need for work, tuition.</td></tr>
+        <tr><td>5</td><td>Retirement to 15%</td><td>15% of pre-tax income going into retirement, counting your employer match and what you've actually put in your IRA. Usually reached by raising your workplace contribution and filling the IRA.</td></tr>
+        <tr><td>6a</td><td>HSA</td><td>If you're on a high-deductible plan: tax-free in, tax-free growth, tax-free out for medical costs.</td></tr>
+        <tr><td>6b</td><td>Kids' college (529)</td><td>Only after your own retirement is on track. Students can borrow for college; nobody can borrow for retirement.</td></tr>
+        <tr><td>6c</td><td>Goals you want</td><td>Travel, a house, a nicer car. Money needed within 3–5 years stays in savings, not stocks.</td></tr>
+        <tr><td>6d</td><td>Invest the rest</td><td>Max your 401(k) (<span data-lim="k401"></span>), then a mega backdoor Roth if your plan allows it, then a taxable brokerage account.</td></tr>
+      </tbody>
+    </table>
+    <p class="addition"><b>Our one addition:</b> a <b>checking cushion</b> (1 month by default, adjustable). It isn't in the Prime Directive, but it means autopays and credit card balances never cause stress. One month is set aside at step 1; any extra month comes at step 3b, after expensive debt is gone, so it doesn't slow down paying off a 22% card.</p>
+    <h3 style="font-size:1.05rem;margin-top:18px">Where you should bend it</h3>
+    <ul class="bends">
+      <li><b>Going for student loan forgiveness (PSLF or income-driven)?</b> Leave those loans out. Extra payments don't speed up forgiveness; they only shrink what gets forgiven.</li>
+      <li><b>0% promo card?</b> Enter the rate it jumps to, and make sure it's gone before the promo ends.</li>
+      <li><b>Where to keep it:</b> the cushion in checking, for easy access; the emergency fund in a high-yield savings account (often around 4%), so months of cash aren't earning nothing.</li>
+      <li><b>Irregular or single income?</b> Choose 6 months for the full emergency fund.</li>
+    </ul>
+    <p class="fine">How the projection works: each month, your extra money (take-home minus essentials) runs through the steps in order. Debts grow by their APR and shrink by their minimum payment. When a debt is paid off, its minimum joins your extra money. Raising a 401(k) contribution lowers take-home pay, assuming about 20% of each pre-tax dollar comes back as lower taxes. IRA, HSA and 529 room resets every January. It's a planning estimate, not financial advice. For years the IRS hasn't announced yet, it uses the latest known limits. Contribution limits come from the <a href="https://www.irs.gov/retirement-plans/cola-increases-for-dollar-limitations-on-benefits-and-contributions" target="_blank" rel="noopener">IRS</a> for each year (<span data-lim="years"></span>), and the projection uses the right year's limits as it moves forward. Order based on the <a href="https://www.reddit.com/r/personalfinance/wiki/commontopics/" target="_blank" rel="noopener">r/personalfinance wiki</a>.</p>
+    </div>
+  </details>
+
+  <details class="fold why faq" id="faq">
+    <summary>Common questions</summary>
+    <div class="fold-body">
+      <h3>What is the r/personalfinance Prime Directive?</h3>
+      <p>It's the r/personalfinance community's order for spare money: a budget, a starter emergency fund, the full employer 401(k) match, high-interest debt, a full emergency fund, moderate-interest debt, then retirement accounts and other goals. Spillover runs your numbers through that order and fills each step before money spills into the next.</p>
+      <h3>Should I pay off credit card debt or build an emergency fund first?</h3>
+      <p>Both, in order. Keep a starter emergency fund ($1,000 or one month of expenses, whichever is more) so a surprise bill doesn't go back on the card. Then put every extra dollar toward debt at 10% APR or more. Build the full 3–6 month emergency fund after that debt is gone.</p>
+      <h3>How much of my savings should go to debt?</h3>
+      <p>Everything above your starter emergency fund and checking cushion, until debt at 10% APR or more is paid off. Spillover shows the exact transfers to make today: how much goes to each card, highest rate first, using the cash you actually have.</p>
+      <h3>Should I pay off debt or invest?</h3>
+      <p>It depends on the interest rate. At 10% or more, pay it off first: it's a guaranteed return that investing can't reliably beat. Between 4% and 10% it's close, and the Prime Directive pays it down after the full emergency fund. Under 4%, pay the minimums and invest. The one exception is the employer match, which comes before any extra debt payments.</p>
+      <h3>Where should my next dollar go after the 401(k) match and emergency fund?</h3>
+      <p>Next come an IRA, any costs you'll have to pay soon, retirement savings up to 15% of pre-tax income, an HSA if you have a high-deductible health plan, a 529 for kids' college, other goals, and finally a taxable brokerage account. Spillover uses each year's IRS contribution limits.</p>
+      <h3>Is Spillover free and private?</h3>
+      <p>Yes. There's no account, no bank login and no tracking. Everything you enter stays in your browser and is never sent to a server. It's a planning tool, not financial advice.</p>
+    </div>
+  </details>
+
+  <footer>
+    <p>Everything stays in this browser. No account, no server, no bank logins, no tracking.</p>
+    <p>Not affiliated with Reddit or r/personalfinance. Built for US accounts and tax rules. A planning tool, not financial advice.</p>
+    <p>Made by <a href="https://kylescheer.com" target="_blank" rel="noopener">Kyle Scheer</a> · <a href="https://github.com/kyletscheer/spillover" target="_blank" rel="noopener">Code on GitHub</a> · <a href="https://ko-fi.com/scheerapps" target="_blank" rel="noopener">Buy me a coffee</a></p>
+  </footer>
+</div>
+<input type="file" id="fileIn" accept=".json,application/json" hidden />
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="sr-only" id="announce" aria-live="polite"></div>
+
+<script>
+/* ================= constants ================= */
+const YEAR = new Date().getFullYear();
+// IRS limits by year. Add a row each November when the IRS announces the next year.
+// 2026: IRS IR-2025-111. 2027: IRS IR-2026-136 (Notice 2026-66) and Rev. Proc. 2026-24 (HSA).
+const LIMITS = {
+  2026: { ira: 7500, k401: 24500, hsaSelf: 4400, hsaFam: 8750, rothSingle: [153000, 168000], rothJoint: [242000, 252000] },
+  2027: { ira: 7500, k401: 25500, hsaSelf: 4500, hsaFam: 9000, rothSingle: [158000, 173000], rothJoint: [250000, 260000] },
+};
+const KNOWN = Object.keys(LIMITS).map(Number).sort((a, b) => a - b);
+// Exact year if we have it; otherwise the closest known year (flagged so the page can say so).
+function limitsFor(y) {
+  if (LIMITS[y]) return { ...LIMITS[y], year: y, exact: true };
+  const use = y > KNOWN[KNOWN.length - 1] ? KNOWN[KNOWN.length - 1] : KNOWN[0];
+  return { ...LIMITS[use], year: use, exact: false };
+}
+const L = limitsFor(YEAR);
+// IRS limits for a year with the user's own limits laid on top (they apply to every year).
+function effLimits(y) {
+  const b = limitsFor(y);
+  return { ...b, ira: S.limIra ?? b.ira, k401: S.limK401 ?? b.k401, hsaSelf: S.limHsa ?? b.hsaSelf, hsaFam: S.limHsa ?? b.hsaFam };
+}
+const TAXBACK = 0.2;   // share of each pre-tax 401(k) dollar assumed to come back as lower tax
+const HIGH = 10, MOD = 4;
+const STORE = "spilloverV1";
+
+const STEPS = [
+  { id: "s0",  n: "0",  t: "Budget", why: "Take-home pay minus essentials and minimum payments.", kind: "setup" },
+  { id: "s1",  n: "1",  t: "Starter emergency fund", why: "$1,000 or one month of expenses, whichever is more.", kind: "keep" },
+  { id: "s2",  n: "2",  t: "Employer match", why: "Free money. Contribute just enough to get all of it.", kind: "work" },
+  { id: "s3a", n: "3a", t: "High-interest debt", why: "10%+ APR. A guaranteed return no investment beats.", kind: "pay" },
+  { id: "s3b", n: "3b", t: "Full emergency fund", why: "Months of expenses in savings.", kind: "keep" },
+  { id: "s3c", n: "3c", t: "Moderate-interest debt", why: "4–10% APR.", kind: "pay" },
+  { id: "s4a", n: "4a", t: "IRA", why: "Yearly limit; unused room is gone for good.", kind: "year" },
+  { id: "s4b", n: "4b", t: "Required upcoming costs", why: "Things you'll have to pay soon no matter what.", kind: "save" },
+  { id: "s5",  n: "5",  t: "Retirement to 15%", why: "15% of pre-tax income, counting your employer match and IRA.", kind: "work" },
+  { id: "s6a", n: "6a", t: "HSA", why: "Triple tax break for medical costs.", kind: "year" },
+  { id: "s6b", n: "6b", t: "Kids' college (529)", why: "After your own retirement is on track.", kind: "year" },
+  { id: "s6c", n: "6c", t: "Goals you want", why: "Travel, a house, a nicer car.", kind: "save" },
+  { id: "s6d", n: "6d", t: "Invest the rest", why: "Max the 401(k), then taxable.", kind: "invest" },
+];
+const KIND = { keep: "Set aside", work: "Set at work", pay: "Extra payments", year: "Yearly limit", save: "Save up", invest: "Invest", setup: "Setup" };
+
+/* ================= state ================= */
+const blank = () => ({
+  takeHome: 0, expenses: 0, gross: 0, cash: 0, efMonths: 3,
+  debts: [], method: "avalanche",
+  hasPlan: true, matchPct: 0, k401Pct: 0, matchMode: "pct", matchDollar: 0, k401Dollar: 0, matchRate: 100,
+  done: false, seen: [],
+  limIra: null, limK401: null, limHsa: null, limOpen: [],
+  cushion: 1,   // months of expenses kept in checking (our addition, not in the Prime Directive)   // personal limits; null = use the IRS number
+  iraOn: true, iraYTD: 0,
+  hdhp: false, hsaFamily: false, hsaYTD: 0, hsaEmployer: 0,
+  kids: false, k529Year: 2500, k529YTD: 0,
+  goals: [], ytdYear: YEAR,
+});
+let S = blank();
+const uid = () => Math.random().toString(36).slice(2, 9);
+const $ = (q, r = document) => r.querySelector(q);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const num = (v) => { const n = parseFloat(String(v).replace(/[^0-9.\-]/g, "")); return isFinite(n) ? n : 0; };
+const fmt = (n) => (n < -0.5 ? "−" : "") + "$" + Math.round(Math.abs(n)).toLocaleString("en-US");
+const fmtIn = (n) => (n ? (Math.round(n * 100) / 100).toLocaleString("en-US", { maximumFractionDigits: 2 }) : "");
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const NOW = new Date();
+const monthLabel = (m) => { const d = new Date(NOW.getFullYear(), NOW.getMonth() + m, 1); return MONTHS[d.getMonth()] + " " + d.getFullYear(); };
+const monthsUntil = (ym) => { if (!ym) return null; const [y, mo] = ym.split("-").map(Number); return (y - NOW.getFullYear()) * 12 + (mo - 1 - NOW.getMonth()); };
+const yearlyName = (id) => ({ s4a: "IRA", s6a: "HSA", s6b: "529", s5: "taxable 15%" }[id] || id);
+const listJoin = (a) => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+const dur = (m) => m <= 0 ? "now" : m < 12 ? `${m} mo` : `${(m / 12).toFixed(m % 12 ? 1 : 0)} yr`;
+
+function save() { try { localStorage.setItem(STORE, JSON.stringify(S)); } catch (e) {} }
+function load() {
+  try { const r = localStorage.getItem(STORE); if (r) S = Object.assign(blank(), JSON.parse(r)); } catch (e) {}
+  if (S.ytdYear !== YEAR) { S.iraYTD = 0; S.hsaYTD = 0; S.k529YTD = 0; S.ytdYear = YEAR; save(); setTimeout(() => toast(`New year: IRA, HSA and 529 room reset for ${YEAR}`), 600); }
+}
+
+/* ================= 401(k): percent or dollars ================= */
+const r1 = (n) => Math.round(n * 10) / 10;
+const dollarMode = (st) => st.hasPlan && st.matchMode === "dollar";
+const toPct = (st, dollars) => (st.gross > 0 ? dollars / st.gross * 100 : 0);   // exact; rounded only when shown
+function contrib(st, pct, short) {   // how a 401(k) level is shown to the user
+  if (!dollarMode(st)) return `${r1(pct)}%`;
+  const d = fmt(st.gross * pct / 100);
+  return short ? `${d}/yr` : `${d} a year (${r1(pct)}% of pay)`;
+}
+
+/* ================= derived targets ================= */
+function derive(st) {
+  const exp = st.expenses, gross = st.gross;
+  const starter = Math.max(1000, exp);
+  const fullEF = Math.max(starter, exp * st.efMonths);
+  // Checking cushion: the first month is held with the starter fund (step 1),
+  // the rest is added at step 3b, after high-interest debt.
+  const cush = exp * (st.cushion || 0), cush1 = exp * Math.min(st.cushion || 0, 1);
+  const s1T = starter + cush1, s3bT = fullEF + cush;
+  const E = effLimits(YEAR);
+  const iraAnnual = st.iraOn ? E.ira : 0;
+  const matchPct = !st.hasPlan ? 0 : dollarMode(st) ? toPct(st, st.matchDollar) : st.matchPct;
+  let pct15 = 0, taxable15 = 0;
+  const matchRate = (st.matchRate || 100) / 100;
+  if (gross > 0) {
+    // You + employer match + a full IRA should reach 15% of pre-tax income.
+    if (st.hasPlan) pct15 = Math.min(E.k401 / gross * 100, Math.max(matchPct, 15 - matchPct * matchRate - iraAnnual / gross * 100));
+    else taxable15 = Math.max(0, 0.15 * gross - iraAnnual);
+  }
+  const hsaCap = st.hdhp ? (st.hsaFamily ? E.hsaFam : E.hsaSelf) : 0;
+  const hsaLimit = Math.max(0, hsaCap - (st.hsaEmployer || 0));   // employer money counts toward the same cap
+  const tier = (d) => d.apr >= HIGH ? "hi" : d.apr >= MOD ? "mid" : "lo";
+  const applies = {
+    s0: true, s1: true, s2: st.hasPlan && matchPct > 0,
+    s3a: st.debts.some((d) => tier(d) === "hi" && d.balance > 0), s3b: true,
+    s3c: st.debts.some((d) => tier(d) === "mid" && d.balance > 0),
+    s4a: st.iraOn, s4b: st.goals.some((g) => g.required && g.target > 0),
+    s5: gross > 0 && (st.hasPlan ? pct15 > 0 : taxable15 > 0),
+    s6a: st.hdhp && hsaLimit > 0, s6b: st.kids && st.k529Year > 0, s6c: st.goals.some((g) => !g.required && g.target > 0), s6d: true,
+  };
+  return { exp, gross, starter, fullEF, cush, cush1, s1T, s3bT, matchPct, matchRate, pct15, taxable15, hsaLimit, hsaCap, tier, applies, extra: st.takeHome - st.expenses };
+}
+function orderDebts(list, method) {
+  return list.slice().sort(method === "snowball" ? (a, b) => a.bal - b.bal : (a, b) => b.apr - a.apr);
+}
+
+/* ================= the engine =================
+   allocate(): run the current cash pile through the steps in order.
+   Cash-type steps stop the flow until they're finished; "set at work" steps
+   don't use cash, so they're flagged as actions without blocking.          */
+function allocate(sim, st, D) {
+  const acts = [], status = {};
+  let blocked = false, reserve = 0;
+  const free = () => Math.max(0, sim.cash - reserve);
+  const mark = (id, have, target, extra = {}) => (status[id] = Object.assign({ have, target, done: have >= target - 0.5 }, extra));
+
+  mark("s0", st.takeHome > 0 && st.expenses > 0 && D.extra > 0 ? 1 : 0, 1);
+
+  // Cash held back is split: the checking cushion fills first, the rest sits in savings.
+  const keepActs = (step, have, cushT, efT, efLabel) => {
+    const chk = Math.min(have, cushT), sav = Math.max(0, have - chk);
+    if (cushT > 0) acts.push({ step, type: "keep", amt: chk, text: `Keep ${fmt(chk)} in checking`, sub: chk >= cushT - 0.5 ? `Checking cushion ✓ (${fmt(cushT)})` : `Checking cushion: ${fmt(cushT - chk)} to go` });
+    acts.push({ step, type: "keep", amt: sav, text: `Keep ${fmt(sav)} in savings`, sub: sav >= efT - 0.5 ? `${efLabel} ✓` : `${efLabel}: ${fmt(efT - sav)} to go` });
+  };
+
+  // 1 starter emergency fund (+ first month of checking cushion)
+  reserve = Math.min(sim.cash, D.s1T);
+  mark("s1", reserve, D.s1T);
+  if (!status.s1.done) blocked = true;
+  keepActs("s1", reserve, D.cush1, D.starter, "Starter emergency fund");
+
+  // 2 employer match (payroll)
+  if (D.applies.s2) {
+    mark("s2", sim.pct, D.matchPct, { unit: "pct" });
+    if (!status.s2.done && !blocked) acts.push({ step: "s2", type: "work", target: D.matchPct, text: `At work: raise your 401(k) to ${contrib(st, D.matchPct)}`, sub: `Now ${contrib(st, sim.pct, true)}. That's the minimum for the full match.` });
+  }
+
+  // debt tiers
+  const payTier = (id, t) => {
+    const ds = orderDebts(sim.debts.filter((d) => D.tier(d) === t && d.bal > 0.5), st.method);
+    const start = sim.debts.filter((d) => D.tier(d) === t).reduce((s, d) => s + d.start, 0);
+    if (!blocked) for (const d of ds) {
+      const a = Math.min(free(), d.bal);
+      if (a > 0.5) { d.bal -= a; sim.cash -= a; acts.push({ step: id, type: "pay", ref: d.id, amt: a, to: `${d.name || "debt"} (${d.apr}% APR)`, text: `Pay ${fmt(a)} extra on ${d.name || "debt"}`, sub: `${d.apr}% APR · ${d.bal > 0.5 ? fmt(d.bal) + " left" : "paid off 🎉"}` }); }
+    }
+    const left = sim.debts.filter((d) => D.tier(d) === t).reduce((s, d) => s + Math.max(0, d.bal), 0);
+    mark(id, start - left, start, { debts: orderDebts(sim.debts.filter((d) => D.tier(d) === t), st.method).map((d) => ({ ...d })) });
+    if (!status[id].done) blocked = true;
+  };
+  if (D.applies.s3a) payTier("s3a", "hi");
+
+  // 3b full emergency fund (+ rest of the checking cushion)
+  const efHave = Math.min(sim.cash, D.s3bT);
+  mark("s3b", efHave, D.s3bT);
+  if (!blocked) {
+    reserve = efHave;
+    if (efHave > D.s1T + 0.5 && D.s3bT > D.s1T) {
+      for (let k = acts.length - 1; k >= 0; k--) if (acts[k].step === "s1" && acts[k].type === "keep") acts.splice(k, 1);   // replaced by the bigger numbers
+      keepActs("s3b", efHave, D.cush, D.fullEF, "Full emergency fund");
+    }
+  }
+  if (!status.s3b.done) blocked = true;
+
+  if (D.applies.s3c) payTier("s3c", "mid");
+
+  // a "fill to target" helper for IRA / HSA / 529 / goals / taxable
+  const fill = (id, key, target, label, verb) => {
+    const room = Math.max(0, target - sim[key]);
+    if (!blocked && room > 0.5) { const a = Math.min(free(), room); if (a > 0.5) { sim[key] += a; sim.cash -= a; acts.push({ step: id, type: "put", key, amt: a, to: label.replace(/^(to|in) (your |a )?/, "your ").replace("your taxable", "a taxable"), text: `${verb} ${fmt(a)} ${label}`, sub: sim[key] >= target - 0.5 ? "Done for the year ✓" : `${fmt(target - sim[key])} of room left this year` }); } }
+    mark(id, sim[key], target);
+    if (!status[id].done) blocked = true;
+  };
+  const goalsStep = (id, required) => {
+    const gs = sim.goals.filter((g) => !!g.required === required && g.target > 0);
+    if (!blocked) for (const g of gs) {
+      const a = Math.min(free(), Math.max(0, g.target - g.saved));
+      if (a > 0.5) { g.saved += a; sim.cash -= a; acts.push({ step: id, type: "put", ref: g.id, amt: a, to: g.name || "your goal", text: `Save ${fmt(a)} for ${g.name || "a goal"}`, sub: g.saved >= g.target - 0.5 ? "Fully funded ✓" : `${fmt(g.target - g.saved)} to go` }); }
+    }
+    const tgt = gs.reduce((s, g) => s + g.target, 0), have = gs.reduce((s, g) => s + Math.min(g.saved, g.target), 0);
+    mark(id, have, tgt, { goals: gs.map((g) => ({ ...g })) });
+    if (!status[id].done) blocked = true;
+  };
+
+  const LY = effLimits(sim.year || YEAR);
+  if (D.applies.s4a) fill("s4a", "ira", LY.ira, "in your IRA", "Put");
+  if (D.applies.s4b) goalsStep("s4b", true);
+
+  // 5 retirement to 15%
+  if (D.applies.s5) {
+    if (st.hasPlan) {
+      const target = dollarMode(st) ? D.pct15 : Math.ceil(D.pct15 * 10 - 1e-9) / 10;   // round up so following it actually reaches 15%
+      // Counted: your 401(k) + employer match (yearly) + IRA money actually put in this year.
+      const matchIn = Math.min(sim.pct, D.matchPct) * D.matchRate;
+      const goal = 0.15 * D.gross, have = (sim.pct + matchIn) / 100 * D.gross + (st.iraOn ? sim.ira : 0);
+      const setOK = sim.pct >= target - 0.05;
+      mark("s5", have, goal, { unit: "ret", setOK, pctTarget: target, matchIn });
+      if (!setOK && !blocked) acts.push({ step: "s5", type: "work", target, text: `At work: raise your 401(k) to ${contrib(st, target)}`, sub: `Now ${contrib(st, sim.pct, true)}. With the match and a full IRA, that's 15% of pre-tax income.` });
+    } else fill("s5", "ret", D.taxable15, "in a taxable brokerage account", "Invest");
+  }
+  if (D.applies.s6a) fill("s6a", "hsa", Math.max(0, (st.hsaFamily ? LY.hsaFam : LY.hsaSelf) - (st.hsaEmployer || 0)), "in your HSA", "Put");
+  if (D.applies.s6b) fill("s6b", "k529", st.k529Year, "in a 529", "Put");
+  if (D.applies.s6c) goalsStep("s6c", false);
+
+  // 6d whatever is left above the full emergency fund
+  const rest = blocked ? 0 : free();
+  if (rest > 0.5) { sim.cash -= rest; sim.invested += rest; acts.push({ step: "s6d", type: "put", amt: rest, to: "investing", text: `Invest ${fmt(rest)}`, sub: "More 401(k) first if there's room, then taxable" }); }
+  mark("s6d", 0, 1, { done: false });
+
+  return { acts, status };
+}
+
+function makeSim(st) {
+  return {
+    year: YEAR, cash: st.cash, pct: !st.hasPlan ? 0 : dollarMode(st) ? toPct(st, st.k401Dollar) : st.k401Pct, ira: st.iraYTD, hsa: st.hsaYTD, k529: st.k529YTD, ret: 0, invested: 0, interest: 0,
+    debts: st.debts.filter((d) => d.balance > 0).map((d) => ({ id: d.id, name: d.name, apr: d.apr, min: d.min, bal: d.balance, start: d.balance })),
+    goals: st.goals.map((g) => ({ ...g, saved: g.saved || 0 })),
+  };
+}
+
+/* Month-by-month projection. Month 0 = moving the cash you have today. */
+function project(st) {
+  const D = derive(st), sim = makeSim(st);
+  const done = {}, started = {}, stepIds = STEPS.map((s) => s.id).filter((id) => D.applies[id] && id !== "s6d" && id !== "s0");
+  // accounts whose room comes back every January
+  const yearly = stepIds.filter((id) => STEPS.find((x) => x.id === id).kind === "year" || (id === "s5" && !st.hasPlan));
+  const segs = Object.fromEntries(yearly.map((id) => [id, []])), open = {};
+  let extra = D.extra, monthlyActs = null, caught, interestAtCaught = 0, lastM = 0;
+  const now = allocate(sim, st, D);
+  // When a debt hits $0, by its minimum or by an extra payment, its minimum joins the monthly extra.
+  const freeMins = () => { for (const db of sim.debts) if (db.bal <= 0.5 && !db.freed) { db.freed = true; db.bal = 0; extra += db.min || 0; } };
+  const record = (r, m) => {
+    for (const id of stepIds) {
+      const s = r.status[id];
+      if (!s) continue;
+      if (s.done && done[id] === undefined) done[id] = m;
+      if (!s.done && started[id] === undefined && r.acts.some((a) => a.step === id && a.type !== "keep")) started[id] = m;
+      if (segs[id]) {
+        if (open[id] === undefined && r.acts.some((a) => a.step === id && a.type === "put")) open[id] = m;
+        if (s.done && open[id] !== undefined) { segs[id].push({ a: open[id], b: m }); delete open[id]; }
+      }
+    }
+  };
+  record(now, 0);
+  const raise = (r) => {
+    for (const a of r.acts) if (a.type === "work" && sim.pct < a.target) {
+      extra -= st.gross * (a.target - sim.pct) / 100 / 12 * (1 - TAXBACK);
+      sim.pct = a.target; if (a.step === "s2" && done[a.step] === undefined) done[a.step] = r.m;
+    }
+  };
+  now.m = 0; raise(now); freeMins();
+  if (stepIds.every((id) => done[id] !== undefined)) { caught = 0; }
+  const goalDone = {};
+  const goalCheck = (m) => { for (const g of sim.goals) if (goalDone[g.id] === undefined && g.target > 0 && g.saved >= g.target - 0.5) goalDone[g.id] = m; };
+  goalCheck(0);
+  const MAXM = 360;
+  for (let m = 1; m <= MAXM && extra > 0; m++) {
+    const d = new Date(NOW.getFullYear(), NOW.getMonth() + m, 1);
+    sim.year = d.getFullYear();
+    if (d.getMonth() === 0) {
+      sim.ira = 0; sim.hsa = 0; sim.k529 = 0; sim.ret = 0;
+      // a year that wasn't filled before December ends: close its bar (shown lighter), new year starts fresh
+      for (const id of yearly) if (open[id] !== undefined) { segs[id].push({ a: open[id], b: m, open: true }); delete open[id]; }
+    }
+    for (const db of sim.debts) {
+      if (db.bal <= 0.5) continue;
+      const i = db.bal * db.apr / 1200; db.bal += i;
+      if (db.apr >= MOD) sim.interest += i;   // low-rate debts get minimums only, so their interest is the same in every plan
+      const p = Math.min(db.bal, db.min || 0); db.bal -= p;
+    }
+    freeMins();
+    sim.cash += extra;
+    const r = allocate(sim, st, D); r.m = m;
+    if (m === 1) monthlyActs = r.acts;
+    raise(r); record(r, m); goalCheck(m); lastM = m;
+    if (caught === undefined && stepIds.every((id) => done[id] !== undefined)) { caught = m; interestAtCaught = sim.interest; }
+    // keep going 12 more months so the January refill of yearly accounts shows up
+    if (caught !== undefined && (m >= caught + 12 || !yearly.length)) break;
+  }
+  if (caught === 0) interestAtCaught = 0;
+  for (const id of yearly) if (open[id] !== undefined) segs[id].push({ a: open[id], b: lastM, open: true });
+  let prev = 0;
+  for (const id of stepIds) {
+    if (done[id] === undefined) continue;
+    const isWork = STEPS.find((x) => x.id === id).kind === "work";
+    started[id] = isWork ? done[id] : segs[id] && segs[id][0] ? segs[id][0].a : Math.min(prev, done[id]);
+    if (!isWork) prev = Math.max(prev, done[id]);
+  }
+  return { D, now, done, started, stepIds, yearly, segs, goalDone, caught, endM: lastM, monthlyActs, interest: caught !== undefined ? interestAtCaught : sim.interest };
+}
+
+/* ================= inputs UI ================= */
+function dueSelects(g, i) {
+  const [y, m] = (g.due || "").split("-");
+  const yr = g.dueY || y || "", mo = g.dueMo || m || "";
+  const months = MONTHS.map((n, k) => `<option value="${String(k + 1).padStart(2, "0")}" ${mo === String(k + 1).padStart(2, "0") ? "selected" : ""}>${n}</option>`).join("");
+  const years = Array.from({ length: 11 }, (_, k) => YEAR + k).map((v) => `<option value="${v}" ${String(v) === String(yr) ? "selected" : ""}>${v}</option>`).join("");
+  return `<div class="due"><select data-goal="${i}" data-f="dueMo" aria-label="Needed by month"><option value="">Month</option>${months}</select>
+    <select data-goal="${i}" data-f="dueY" aria-label="Needed by year"><option value="">Year</option>${years}</select>
+    ${yr || mo ? `<button type="button" class="linkish" data-act="due-clear" data-i="${i}">clear</button>` : ""}</div>`;
+}
+function limitCtl(key, irsVal, what) {
+  const custom = S[key] !== null && S[key] !== undefined, open = custom || S.limOpen.includes(key);
+  if (!open) return `<div class="help">Yearly limit: <b>${fmt(irsVal)}</b> (IRS, ${L.year}). <button type="button" class="linkish" data-act="lim-open" data-v="${key}">Use a different limit</button></div>`;
+  return `<div class="field limbox"><label>Your yearly ${what} limit</label>${money(key, S[key], fmtIn(irsVal))}
+    <div class="help">IRS limit is ${fmt(irsVal)} for ${L.year}. Enter your own if it's different, e.g. age 50+ catch-up contributions, or a lower cap you've chosen. It applies to every year. <button type="button" class="linkish" data-act="lim-reset" data-v="${key}">Use the IRS limit</button></div></div>`;
+}
+function money(k, v, ph = "0", attrs = "") { return `<div class="money"><input inputmode="decimal" data-k="${k}" value="${fmtIn(v)}" placeholder="${ph}" ${attrs}/></div>`; }
+function pctIn(k, v, ph = "0") { return `<div class="pct"><input inputmode="decimal" data-k="${k}" value="${fmtIn(v)}" placeholder="${ph}"/></div>`; }
+function seg(k, v, opts) { return `<div class="seg" role="group" data-seg="${k}">${opts.map(([val, lab]) => `<button type="button" data-v="${val}" aria-pressed="${String(v) === String(val)}" class="${String(v) === String(val) ? "on" : ""}">${lab}</button>`).join("")}</div>`; }
+// Wire every label to its control, and name the unlabeled ones, after each render.
+function a11y(root) {
+  let n = 0;
+  root.querySelectorAll(".field").forEach((f) => {
+    const lab = f.querySelector(":scope > label"); if (!lab) return;
+    const ctl = f.querySelector("input, select");
+    const grp = f.querySelector(".seg");
+    if (ctl && !grp) { ctl.id = ctl.id || `in-${++n}`; lab.htmlFor = ctl.id; }
+    else if (grp) { lab.id = lab.id || `lb-${++n}`; grp.setAttribute("aria-labelledby", lab.id); }
+  });
+  root.querySelectorAll(".item input:not([aria-label])").forEach((i) => {
+    const box = i.parentElement.classList.contains("item") ? null : (i.closest(".money, .pct") || i).parentElement;
+    const mini = box && box.querySelector(".mini");
+    i.setAttribute("aria-label", (mini && mini.textContent) || i.placeholder || "value");
+  });
+  root.querySelectorAll("[data-goalseg] button").forEach((b) => b.setAttribute("aria-pressed", b.classList.contains("on")));
+}
+const SECS = [["budget", "Money in and out"], ["cash", "Cash"], ["debts", "Debts"], ["retire", "Retirement"], ["more", "Health and college"], ["goals", "Goals"]];
+const UI = { screen: 0, editing: false, moreOpen: new Set(), intro: true, drawer: false, sideSecs: new Set(["budget"]),
+  sideOpen: (() => { try { return localStorage.getItem("spilloverSide") !== "0"; } catch (e) { return true; } })() };
+const isMobile = () => matchMedia("(max-width: 999px)").matches;
+// one-line summary shown on each sidebar section
+function secSummary(id) {
+  const st = S;
+  if (id === "budget") return `${fmt(st.takeHome)} in, ${fmt(st.expenses)} out`;
+  if (id === "cash") return fmt(st.cash);
+  if (id === "debts") { const n = st.debts.filter((d) => d.balance > 0).length; return n ? `${n} debt${n > 1 ? "s" : ""}, ${fmt(st.debts.reduce((a, d) => a + (d.balance || 0), 0))}` : "None"; }
+  if (id === "retire") return !st.hasPlan ? "No plan at work" : st.matchMode === "dollar" ? `Match ${fmt(st.matchDollar)}/yr` : `Match ${st.matchPct || 0}%`;
+  if (id === "more") return [st.hdhp && "HSA", st.kids && "529"].filter(Boolean).join(", ") || "None";
+  if (id === "goals") return st.goals.length ? `${st.goals.length} goal${st.goals.length > 1 ? "s" : ""}` : "None";
+  return "";
+}
+const field = (label, ctl, help = "") => `<div class="field"><label>${label}</label>${ctl}${help ? `<div class="help">${help}</div>` : ""}</div>`;
+
+function debtRow(d, i) {
+  const t = d.apr >= HIGH ? ["hi", "High interest"] : d.apr >= MOD ? ["mid", "Moderate interest"] : ["lo", "Low interest: minimums only"];
+  return `<div class="item"><button class="x" data-act="rm-debt" data-i="${i}" aria-label="Remove debt">×</button>
+    <input class="name" data-debt="${i}" data-f="name" value="${esc(d.name)}" placeholder="What is it? (e.g. Visa)" />
+    <div class="grid3"><div><span class="mini">Balance</span><div class="money"><input inputmode="decimal" data-debt="${i}" data-f="balance" value="${fmtIn(d.balance)}" placeholder="0"/></div></div>
+    <div><span class="mini">Interest (APR)</span><div class="pct"><input inputmode="decimal" data-debt="${i}" data-f="apr" value="${fmtIn(d.apr)}" placeholder="0"/></div></div>
+    <div><span class="mini">Minimum / mo</span><div class="money"><input inputmode="decimal" data-debt="${i}" data-f="min" value="${fmtIn(d.min)}" placeholder="0"/></div></div></div>
+    <span class="tag ${d.balance > 0 ? t[0] : ""}" data-tag="${i}">${d.balance > 0 ? t[1] : ""}</span><span class="dwarn" data-dwarn="${i}"></span></div>`;
+}
+function goalRow(g, i) {
+  const extra = g.saved > 0 || g.due;
+  return `<div class="item"><button class="x" data-act="rm-goal" data-i="${i}" aria-label="Remove goal">×</button>
+    <input class="name" data-goal="${i}" data-f="name" value="${esc(g.name)}" placeholder="What for? (e.g. Travel fund)" />
+    <div class="row2"><div><span class="mini">How much</span><div class="money"><input inputmode="decimal" data-goal="${i}" data-f="target" value="${fmtIn(g.target)}" placeholder="0"/></div></div>
+    <div><span class="mini">Is it…</span><div class="seg" data-goalseg="${i}"><button type="button" data-v="1" class="${g.required ? "on" : ""}">Must pay soon</button><button type="button" data-v="0" class="${!g.required ? "on" : ""}">Nice to have</button></div></div></div>
+    <details class="item-more" ${extra ? "open" : ""}><summary>Saved already, or a deadline?</summary>
+      <div class="row2"><div><span class="mini">Saved so far</span><div class="money"><input inputmode="decimal" data-goal="${i}" data-f="saved" value="${fmtIn(g.saved)}" placeholder="0"/></div></div>
+      <div><span class="mini">Needed by</span>${dueSelects(g, i)}</div></div></details></div>`;
+}
+
+// Each screen: one question, the essentials, and anything optional behind "More options".
+const SCREENS = [
+  { id: "budget", q: "What comes in and goes out each month?", sub: "Rough numbers are fine. You can change them any time.",
+    body: (st) => field("Take-home pay per month", money("takeHome", st.takeHome, "e.g. 4,200"), "What lands in your bank account, after tax.")
+      + field("Essential spending per month", money("expenses", st.expenses, "e.g. 2,800"), "Rent, food, transport, insurance, phone, <b>and the minimum payment on every debt</b>.")
+      + field("Yearly income before tax <span class='opt'>optional</span>", money("gross", st.gross, "e.g. 65,000"), "Only used for the retirement steps.") },
+  { id: "cash", q: "How much cash do you have right now?", sub: "Checking and savings together.",
+    body: (st) => field("Checking + savings, total", money("cash", st.cash, "e.g. 3,000"), "Your real balance today."),
+    more: (st) => field("Checking cushion", seg("cushion", st.cushion, [[0, "None"], [1, "1 month"], [2, "2 months"]]), "Months of expenses that always stay in checking, so bills and card payments never cause stress. Not part of the Prime Directive; we add it because it helps.")
+      + field("Full emergency fund", seg("efMonths", st.efMonths, [[3, "3 months"], [4, "4 months"], [6, "6 months"]]), "Choose 6 if your income is irregular or you're the only earner.") },
+  { id: "debts", q: "Do you owe money on anything?", sub: "Credit cards, car loans, student loans, personal loans. Leave out your mortgage. No debts? Just press Next.",
+    body: (st) => `<div class="items">${st.debts.map(debtRow).join("")}</div>${st.debts.length ? `<div class="help" id="minsLine"></div>` : ""}<button class="btn dashed" data-act="add-debt">+ Add a debt</button>`,
+    more: (st) => st.debts.length > 1 ? field("Which debt gets extra money first?", seg("method", st.method, [["avalanche", "Highest interest"], ["snowball", "Smallest balance"]]), "Highest interest (the avalanche method) saves the most money. Smallest balance (the snowball method) clears whole debts sooner. Both are fine.") : "" },
+  { id: "retire", q: "Does your job offer a retirement plan?", sub: "A 401(k), 403(b) or similar.",
+    body: (st) => field("Retirement plan at work?", seg("hasPlan", st.hasPlan, [[true, "Yes"], [false, "No / not sure"]]))
+      + (!st.hasPlan ? "" : st.matchMode === "dollar"
+        ? `<div class="row2">${field("You put in for the full match", money("matchDollar", st.matchDollar, "per year"))}${field("You put in now", money("k401Dollar", st.k401Dollar, "per year"))}</div><div class="help">Yearly dollars. ${st.gross > 0 ? "" : "<b>Needs your yearly income (question 1).</b> "}<button type="button" class="linkish" data-act="match-mode" data-v="pct">Use percent instead</button></div>`
+        : `<div class="row2">${field("% of pay for the full match", pctIn("matchPct", st.matchPct, "0 if none"))}${field("% you put in now", pctIn("k401Pct", st.k401Pct, "0"))}</div><div class="help">"We match 100% up to 4% of pay" → enter 4. No match → 0. <button type="button" class="linkish" data-act="match-mode" data-v="dollar">Match is in dollars?</button></div>`)
+      // IRA: asked up front (not under More options), since it's its own step in the plan
+      + field("Include an IRA (Roth or traditional)?", seg("iraOn", st.iraOn, [[true, "Yes"], [false, "Skip"]]))
+      + (st.iraOn ? field("Put into an IRA so far this year", money("iraYTD", st.iraYTD), st.gross >= L.rothSingle[0] ? `At your income, direct Roth contributions may be limited. A traditional or <i>backdoor</i> Roth IRA still works.` : "") + limitCtl("limIra", L.ira, "IRA") : ""),
+    more: (st) => (st.hasPlan ? field("How much does your employer put in?", seg("matchRate", st.matchRate || 100, [[100, "$1 for every $1"], [50, "50¢ for every $1"]]), "Check your plan's summary. Most match dollar for dollar or 50 cents on the dollar.") : "")
+      + (st.hasPlan ? limitCtl("limK401", L.k401, "401(k)") : "") },
+  { id: "more", q: "Two quick questions", sub: "Most people answer No to both.",
+    body: (st) => field("High-deductible health plan with an HSA?", seg("hdhp", st.hdhp, [[true, "Yes"], [false, "No / not sure"]]))
+      + (st.hdhp ? field("HSA coverage", seg("hsaFamily", st.hsaFamily, [[false, "Just me"], [true, "Family"]])) : "")
+      + field("Saving for a child's college?", seg("kids", st.kids, [[true, "Yes"], [false, "No"]]))
+      + (st.kids ? field("How much per year", money("k529Year", st.k529Year)) : ""),
+    more: (st) => !st.hdhp && !st.kids ? "" :
+      (st.hdhp ? `<div class="row2">${field("You put in the HSA this year", money("hsaYTD", st.hsaYTD))}${field("Your employer puts in per year", money("hsaEmployer", st.hsaEmployer, "0 if none"))}</div>` + limitCtl("limHsa", st.hsaFamily ? L.hsaFam : L.hsaSelf, "HSA") : "")
+      + (st.kids ? field("Put in a 529 this year", money("k529YTD", st.k529YTD)) : "") },
+  { id: "goals", q: "Saving up for anything?", sub: "A certification, a car, travel, a down payment. Nothing? Press See my plan.",
+    body: (st) => `<div class="items">${st.goals.map(goalRow).join("")}</div><button class="btn dashed" data-act="add-goal">+ Add a goal</button>` },
+];
+
+function renderInputs() {
+  const st = S, setup = !st.done || UI.editing, mobile = isMobile();
+  // Desktop: the sidebar is always there, either open or folded to a slim rail.
+  // Phone: it's a drawer opened from the header button.
+  const sideShown = !setup && (mobile ? UI.drawer : true);
+  const railed = !setup && !mobile && !UI.sideOpen;
+  $("#inputs").hidden = !setup; $("#results").hidden = setup; $("#side").hidden = !sideShown;
+  document.body.classList.toggle("in-setup", setup);
+  document.body.classList.toggle("side-layout", sideShown && !mobile);
+  document.body.classList.toggle("side-railed", railed);
+  document.body.classList.toggle("drawer-open", sideShown && mobile);
+  $("#scrim").hidden = !(sideShown && mobile);
+  const eb = $("#editBtn");
+  eb.hidden = setup || !st.done || !mobile;
+  eb.textContent = "Edit my numbers";
+  eb.setAttribute("aria-controls", "side"); eb.setAttribute("aria-expanded", String(sideShown));
+  if (setup) { $("#side").innerHTML = ""; renderWizard(); }
+  else { $("#inputs").innerHTML = ""; !sideShown ? ($("#side").innerHTML = "") : railed ? renderRail() : renderSide(); }
+}
+
+// Folded sidebar on desktop: one slim button to bring it back.
+function renderRail() {
+  $("#side").innerHTML = `<button class="rail" data-act="side-open" aria-expanded="false" aria-controls="side" title="Show your numbers">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+    <span>Your numbers</span></button>`;
+}
+// The sidebar: every question as a collapsible section, edited in place.
+function renderSide() {
+  const el = $("#side"), scroll = el.scrollTop;
+  el.innerHTML = `<div class="side-head"><h2>Your numbers</h2>${isMobile() ? `<button class="btn ghost small" data-act="side-close">Done</button>` : `<button class="icon-btn" data-act="side-close" aria-label="Hide your numbers" aria-expanded="true" aria-controls="side" title="Hide"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>`}</div>
+    <p class="side-note">Your plan updates as you type.</p>
+    ${SCREENS.map((sc) => {
+      const more = sc.more ? sc.more(S) : "";
+      return `<details class="ss" data-ss="${sc.id}" ${UI.sideSecs.has(sc.id) ? "open" : ""}>
+        <summary><span class="ss-t">${SECS.find((x) => x[0] === sc.id)[1]}</span><span class="ss-sum" data-sum="${sc.id}">${secSummary(sc.id)}</span></summary>
+        <div class="fields">${sc.body(S)}${more ? `<details class="more" data-more="${sc.id}" ${UI.moreOpen.has(sc.id) ? "open" : ""}><summary>More options</summary><div class="fields">${more}</div></details>` : ""}</div>
+      </details>`;
+    }).join("")}
+    <button class="linkish side-redo" data-act="redo">Go through the questions again</button>`;
+  el.scrollTop = scroll; a11y(el);
+}
+
+function renderWizard() {
+  const el = $("#inputs"), st = S;
+  if (!st.done && UI.intro) {
+    el.innerHTML = `<div class="screen intro">
+      <h2>A plan for every extra dollar</h2>
+      <p class="lede">The r/personalfinance <b>Prime Directive</b> is a list of financial priorities, a flowchart that shows exactly where each dollar should go. This tool provides that guidance as a calculator, customized to your own financial situation.</p>
+      <ol class="how">
+        <li><span><b>Answer six short questions.</b> Rough numbers are fine.</span></li>
+        <li><span><b>See which step you're on</b> and exactly what to do today.</span></li>
+        <li><span><b>Come back once a month,</b> update your numbers, and make the next move.</span></li>
+      </ol>
+      <p class="need">You'll need your take-home pay, what you spend each month, your cash balance and any debts. It takes about five minutes.</p>
+      <div class="nav"><button class="linkish" data-act="example">Just show me an example</button><span class="grow"></span><button class="btn solid" data-act="start">Start</button></div>
+      <p class="privacy">Nothing you type leaves this browser. No account, no bank logins, it's totally free.</p>
+    </div>`;
+    return;
+  }
+  const i = UI.screen, sc = SCREENS[i], last = i === SCREENS.length - 1;
+  const more = sc.more ? sc.more(st) : "";
+  const jump = UI.editing ? `<nav class="jump" aria-label="Jump to a question">${SCREENS.map((x, k) => `<button type="button" class="${k === i ? "on" : ""}" data-act="jump" data-i="${k}">${SECS[k][1]}</button>`).join("")}</nav>` : "";
+  el.innerHTML = `<div class="screen">
+      ${jump}
+      <div class="progress"><div class="track" aria-hidden="true">${SCREENS.map((_, k) => `<i class="${k < i ? "done" : k === i ? "now" : ""}"></i>`).join("")}</div><span>Question ${i + 1} of ${SCREENS.length}</span></div>
+      <h2>${sc.q}</h2><p class="qsub">${sc.sub}</p>
+      <div class="fields">${sc.body(st)}</div>
+      ${more ? `<details class="more" data-more="${sc.id}" ${UI.moreOpen.has(sc.id) ? "open" : ""}><summary>More options</summary><div class="fields">${more}</div></details>` : ""}
+      <p class="err" id="screenErr" role="alert"></p>
+      <div class="nav">
+        ${i > 0 ? `<button class="btn ghost" data-act="prev">Back</button>` : !st.done ? `<button class="btn ghost" data-act="to-intro">Back</button>` : "<span></span>"}
+        <span class="grow"></span>
+        ${UI.editing ? `<button class="btn ghost" data-act="done-edit">Back to my plan</button>` : ""}
+        <button class="btn solid" data-act="next">${last ? (UI.editing ? "Update my plan" : "See my plan") : "Next"}</button>
+      </div>
+    </div>`;
+}
+
+/* ================= results UI ================= */
+function renderResults() {
+  const el = $("#results"), st = S;
+  if (!st.done || UI.editing) { el.innerHTML = ""; return; }
+  const P = project(st), D = P.D, st0 = P.now.status;
+  const order = STEPS.filter((s) => D.applies[s.id]);
+  const current = order.find((s) => s.id !== "s6d" && st0[s.id] && !st0[s.id].done) || order[order.length - 1];
+  const titleOf = (s) => (s.id === "s1" && D.cush1 > 0 ? "Starter emergency fund + cushion" : s.id === "s3b" && D.cush > D.cush1 ? "Full emergency fund + cushion" : s.t);
+  const headline = current.id === "s0" ? "Spend less than you earn first" : current.id === "s6d" ? "You're caught up. Invest the rest." : titleOf(current);
+  const nextAct = (P.monthlyActs || P.now.acts).find((a) => a.type !== "keep");
+  let line;
+  if (D.extra <= 0) line = `Your essentials (${fmt(st.expenses)}) are more than your take-home pay (${fmt(st.takeHome)}). First find a way to have money left over each month.`;
+  else if (current.kind === "work") line = `Your next move isn't a transfer: <b>raise your 401(k) at work to ${contrib(st, current.id === "s2" ? D.matchPct : D.pct15)}</b>.`;
+  else if (nextAct) line = `Your next dollar goes to <b>${esc(nextAct.to || "")}</b>.`;
+  else line = `Keep saving until this step is done.`;
+  const lab = (m) => (m === undefined ? "30+ years" : m === 0 ? "now" : monthLabel(m));
+  // The headline is the one thing to do next, written as an instruction.
+  const pathSteps = order.filter((s) => s.id !== "s0" || current.id === "s0");
+  const doneCount = pathSteps.filter((s) => s.id !== "s6d" && st0[s.id] && st0[s.id].done).length;
+  const tMoves = P.now.acts.filter((a) => a.type !== "keep"), mMoves = (P.monthlyActs || []).filter((a) => a.type !== "keep");
+  const firstMoney = tMoves.find((a) => a.type !== "work");
+  const joinAnd = (a) => (a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]);
+  const shortTo = (a) => (a.to || "").replace(/ \(.*\)$/, "");   // "Visa (22.9% APR)" -> "Visa"
+  let actionLine;
+  if (D.extra <= 0) actionLine = "Free up some money each month first.";
+  else if (current.kind === "work") actionLine = `Raise your 401(k) to ${contrib(st, current.id === "s2" ? D.matchPct : D.pct15)} at work.`;
+  else if (firstMoney) {
+    // Only money already in the accounts can move today, so the headline sums every move from it.
+    const moneyNow = tMoves.filter((a) => a.type !== "work");
+    const totalNow = moneyNow.reduce((t, a) => t + a.amt, 0);
+    const parts = moneyNow.map((a) => `${fmt(a.amt)} to ${shortTo(a)}`);
+    const shown = parts.length > 3 ? [...parts.slice(0, 3), `${parts.length - 3} more`] : parts;
+    actionLine = moneyNow.length === 1 ? `${firstMoney.text} today.` : `Move ${fmt(totalNow)} today: ${joinAnd(shown)}.`;
+  }
+  else actionLine = st.cash > 0.5 ? `Keep your ${fmt(st.cash)} where it is for now.` : `Nothing to move yet.`;
+  const ann = `You're on step ${current.n}: ${headline}.`;
+  if ($("#announce").textContent !== ann) $("#announce").textContent = ann;
+
+  const actItem = (a) => `<li class="${a.type}"><span>${esc(a.text)}<small>${esc((a.sub || "").replace(/ · /g, ", "))}</small></span>${a.amt ? `<b>${fmt(a.amt)}</b>` : "<b></b>"}</li>`;
+  const keepLine = (acts) => { const k = acts.filter((a) => a.type === "keep" && a.amt > 0.5); return k.length ? `<p class="keep-line">Set aside: ${k.map((a) => `<b>${fmt(a.amt)}</b> ${a.text.includes("checking") ? "in checking" : "in savings"}`).join(" and ")}.</p>` : ""; };
+  const todayMoves = P.now.acts.filter((a) => a.type !== "keep");
+  const freed = st.debts.filter((d) => d.balance > 0 && P.now.acts.some((a) => a.type === "pay" && a.to && a.to.startsWith((d.name || "debt") + " (") && /paid off/.test(a.sub || ""))).reduce((t, d) => t + (d.min || 0), 0);
+  const monthMoves = (P.monthlyActs || []).filter((a) => a.type !== "keep");
+  // The monthly surplus is an estimate (spending moves around). What's real is the checking balance,
+  // so the monthly instruction is a sweep rule: anything above the cushion moves on; the amount is "about".
+  const curIdx = STEPS.findIndex((s) => s.id === current.id), s3bIdx = STEPS.findIndex((s) => s.id === "s3b");
+  const cushNow = curIdx >= s3bIdx ? D.cush : D.cush1;
+  const sweepTo = (() => { const a = monthMoves.find((x) => x.type === "pay" || x.type === "put"); return a ? shortTo(a) : "savings"; })();
+  const sweepRule = cushNow > 0.5 ? `move whatever is in checking above ${fmt(cushNow)}` : `move what you didn't spend`;
+  const heroSub = D.extra <= 0 ? `Your essentials are ${fmt(-D.extra)} more than your take-home pay.`
+    : `${firstMoney ? "After that, right before each payday" : "Right before each payday"}, ${sweepRule} to ${esc(sweepTo)} (about ${fmt(D.extra + freed)} if your budget holds)${P.caught > 0 ? `. At that pace you're caught up by ${lab(P.caught)}` : P.caught === 0 ? ". You're caught up right away" : ""}.`;
+
+  // the current step, in detail
+  const stt = st0[current.id] || {};
+  let detail = "";
+  if (current.id !== "s0" && current.id !== "s6d") {
+    let why = current.why;
+    if (current.id === "s5" && st.hasPlan) why = `15% of ${fmt(D.gross)} is ${fmt(0.15 * D.gross)} a year, counting your employer match and IRA. ${stt.setOK ? `Your 401(k) is set right (${contrib(st, stt.pctTarget, true)})${st.iraOn ? "; filling the IRA gets you the rest" : ""}.` : `Raise your 401(k) to ${contrib(st, stt.pctTarget)} at work.`}`;
+    if (current.id === "s1") why = D.cush1 > 0 ? `${fmt(D.starter)} in savings plus a ${fmt(D.cush1)} cushion in checking.` : `$1,000 or one month of expenses, whichever is more.`;
+    if (current.id === "s3b") why = `${fmt(D.fullEF)} in savings (${st.efMonths} months)${D.cush > 0 ? ` plus ${fmt(D.cush)} in checking` : ""}.`;
+    if (current.id === "s3a" || current.id === "s3c") why = `${current.id === "s3a" ? "Debts at 10% or more" : "Debts at 4–10%"}, paid with ${st.method === "snowball" ? "the smallest balance" : "the highest rate"} first.`;
+    if (stt.unit === "pct") detail = `<div class="cur-detail"><p>${why}</p><p class="big">${contrib(st, stt.have, true)} → ${contrib(st, stt.target, true)}</p></div>`;
+    else if (stt.target) {
+      const pct = Math.min(100, stt.have / stt.target * 100), left = Math.max(0, stt.target - stt.have);
+      const sub = stt.debts ? stt.debts.map((d) => `<div><span>${esc(d.name || "Debt")}, ${d.apr}%</span><span>${d.bal > 0.5 ? fmt(d.bal) + " left" : "paid off ✓"}</span></div>`).join("")
+        : stt.goals ? stt.goals.map((g) => `<div><span>${esc(g.name || "Goal")}</span><span>${fmt(Math.min(g.saved, g.target))} / ${fmt(g.target)}</span></div>`).join("") : "";
+      detail = `<div class="cur-detail"><p>${why}</p><div class="bar ${current.kind === "pay" ? "debt" : ""}"><i style="width:${pct}%"></i></div>
+        <p class="meta"><b>${fmt(left)}</b> to go, done by <b>${lab(P.done[current.id])}</b></p>${sub ? `<div class="s-sub">${sub}</div>` : ""}</div>`;
+    }
+  }
+  // One line of specifics for each step on the path: the numbers that apply to you, then how long it takes.
+  const LYnow = effLimits(YEAR);
+  const listJoin = (a) => (a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1]);
+  const dueText = (g) => { const m = monthsUntil(g.due); return m === null ? "" : ` by ${monthLabel(m)}`; };
+  const pathInfo = (s, isDone) => {
+    const t = st0[s.id] || {}, cushTxt = (c) => (c > 0.5 ? ` plus a ${fmt(c)} cushion in checking` : "");
+    switch (s.id) {
+      case "s0": return `Essentials ${fmt(st.expenses)} against ${fmt(st.takeHome)} take-home pay.`;
+      case "s1": return isDone ? `${fmt(D.starter)} in savings${cushTxt(D.cush1)}.` : `${fmt(D.starter)} in savings${cushTxt(D.cush1)}. You have ${fmt(t.have || 0)} of ${fmt(D.s1T)}.`;
+      case "s2": return isDone ? `You put in ${contrib(st, t.have)}, enough for the full match.` : `Put in ${contrib(st, D.matchPct)} to get the full match. You're at ${contrib(st, t.have || 0)}.`;
+      case "s3a": case "s3c": {
+        const ds = (t.debts || []).filter((d) => d.start > 0.5);
+        if (isDone) return `${listJoin(ds.map((d) => esc(d.name || "Debt")))} paid off.`;
+        return `${listJoin(ds.map((d) => `${esc(d.name || "Debt")} (${fmt(d.bal)} at ${d.apr}%)`))}, ${st.method === "snowball" ? "smallest balance" : "highest rate"} first.`;
+      }
+      case "s3b": return `${st.efMonths} months of expenses: ${fmt(D.fullEF)} in savings${cushTxt(D.cush)}. That's ${fmt(Math.max(0, D.s3bT - D.s1T))} more than step 1.`;
+      case "s4a": return `Up to ${fmt(LYnow.ira)} a year. ${fmt(t.have || 0)} in for ${YEAR}${t.done ? "" : `, ${fmt(Math.max(0, t.target - t.have))} of room left`}.`;
+      case "s4b": case "s6c": {
+        const gs = t.goals || [];
+        return `${listJoin(gs.map((g) => `${esc(g.name || "Goal")} (${fmt(Math.min(g.saved, g.target))} of ${fmt(g.target)}${dueText(g)})`))}.`;
+      }
+      case "s5": {
+        if (!st.hasPlan) return `${fmt(D.taxable15)} a year into a taxable brokerage account, since you have no plan at work.`;
+        const iraPart = st.iraOn ? ` + IRA ${fmt(LYnow.ira)}` : "";
+        return `${fmt(0.15 * D.gross)} a year: your 401(k) ${contrib(st, t.pctTarget || D.pct15, true)} + match ${dollarMode(st) ? fmt(D.gross * D.matchPct * D.matchRate / 100) : r1(D.matchPct * D.matchRate) + "%"}${iraPart}. You're at ${fmt(t.have || 0)}.`;
+      }
+      case "s6a": return `${fmt(t.target || 0)} a year${st.hsaEmployer > 0 ? ` (the ${fmt(D.hsaCap)} limit minus ${fmt(st.hsaEmployer)} from your employer)` : ""}. ${fmt(t.have || 0)} in for ${YEAR}.`;
+      case "s6b": return `${fmt(st.k529Year)} a year. ${fmt(t.have || 0)} in for ${YEAR}.`;
+      case "s6d": return st.hasPlan ? `Raise your 401(k) toward the ${fmt(LYnow.k401)} limit, then use a taxable brokerage account.` : `A taxable brokerage account, in low-cost index funds.`;
+    }
+    return "";
+  };
+  const pathTime = (s, isDone) => {
+    if (isDone || s.kind === "work" || s.id === "s6d" || P.done[s.id] === undefined) return "";
+    const a = P.started[s.id], b = P.done[s.id];
+    if (a === undefined || b <= 0) return "";
+    const n = Math.max(1, b - a);
+    return `${a > 0 ? `Starts ${lab(a)}, about` : "About"} ${n} month${n === 1 ? "" : "s"}${P.yearly.includes(s.id) ? " the first year" : ""}.`;
+  };
+  const path = order.filter((s) => s.id !== "s0" || current.id === "s0").map((s) => {
+    const isDone = s.id !== "s6d" && st0[s.id] && st0[s.id].done, isNow = s === current;
+    const when = isDone ? "" : s.kind === "work" && (s.id !== "s5" || S.hasPlan) && !(st0[s.id] && st0[s.id].setOK) ? "change at work" : s.id === "s6d" ? (P.caught ? `from ${lab(P.caught)}` : "") : P.done[s.id] !== undefined ? `by ${lab(P.done[s.id])}` : "";
+    return `<li class="p ${isDone ? "done" : isNow ? "now" : ""}"><span class="pdot">${isDone ? "✓" : s.n}</span>
+      <div class="pmain"><div class="ptitle">${titleOf(s)}${isNow ? ` <span class="here">You're here</span>` : ""}</div>${isNow ? detail : `<p class="pinfo">${pathInfo(s, isDone)}${pathTime(s, isDone) ? ` <span class="ptime">${pathTime(s, isDone)}</span>` : ""}</p>`}</div>
+      <span class="pwhen">${when}${P.yearly.includes(s.id) && !isNow ? (when ? ", then yearly" : "Yearly") : ""}</span></li>`;
+  }).join("");
+
+  el.innerHTML = `
+    <div class="print-only print-head"><b>Spillover plan</b> · ${NOW.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}<br/>
+      Take-home ${fmt(st.takeHome)}/mo · essentials ${fmt(st.expenses)}/mo · cash ${fmt(st.cash)} · ${st.debts.filter((d) => d.balance > 0).map((d) => `${esc(d.name || "debt")} ${fmt(d.balance)} @ ${d.apr}%`).join(", ") || "no debts"}</div>
+    <section class="hero">
+      <p class="kicker">Step ${current.n}: ${current.id === "s0" ? "Budget" : titleOf(current)}</p>
+      <h2>${actionLine}</h2>
+      <p class="hero-sub">${heroSub}</p>
+      <div class="track big" role="img" aria-label="${doneCount} of ${pathSteps.length} steps done">${pathSteps.map((s) => `<i class="${st0[s.id] && st0[s.id].done && s.id !== "s6d" ? "done" : s === current ? "now" : ""}" title="${s.n}: ${titleOf(s)}"></i>`).join("")}</div>
+      <p class="track-note">${doneCount} of ${pathSteps.length} steps done</p>
+    </section>
+    ${warningsHTML(st, D, P)}
+    <div class="cols duo solo">
+      <section class="card"><h3>Do this today</h3>
+        ${firstMoney ? `<p class="lead">From the ${fmt(st.cash)} in your accounts:</p>` : ""}
+        ${todayMoves.length ? `<ol class="acts">${todayMoves.map(actItem).join("")}</ol>` : `<p class="empty">No transfers today.</p>`}
+        ${keepLine(P.now.acts)}
+        ${todayMoves.length ? `<div class="did"><button class="btn solid" data-act="did-today">${todayMoves.length === 1 ? "I did this" : "I did these"}</button><span>Updates your balances and shows your next move.</span></div>` : ""}
+        <p class="lead small">Come back once a month, update your numbers, and the plan updates.</p></section>
+    </div>
+    <section class="card"><h3>Your path</h3><p class="lead">Only the steps that apply to you, in order. Finish one before starting the next.</p><ol class="path">${path}</ol></section>
+    <details class="fold" data-fold="whatif"><summary>What if I had more money?</summary><div class="fold-body">${whatIfCard(P)}</div></details>
+    <details class="fold" data-fold="timeline"><summary>See the timeline</summary><div class="fold-body">${timelineHTML(P, order) || `<p class="empty">Nothing left to schedule.</p>`}</div></details>`;
+}
+
+/* Things that make the plan wrong if ignored. Each one says what to do about it. */
+function warningsHTML(st, D, P) {
+  const w = [];
+  const mins = st.debts.filter((d) => d.balance > 0).reduce((a, d) => a + (d.min || 0), 0);
+  if (mins > 0 && st.expenses < mins) w.push(`Your essentials (${fmt(st.expenses)}) are less than your debt minimums alone (${fmt(mins)}). Essentials should <b>include</b> every minimum payment, so your extra money is probably overstated.`);
+  for (const d of st.debts) {
+    const interest = d.balance * d.apr / 1200;
+    if (d.balance > 0 && d.apr > 0 && (d.min || 0) <= interest) w.push(`<b>${esc(d.name || "A debt")}</b>: the ${fmt(d.min || 0)} minimum doesn't cover the ${fmt(interest)} of monthly interest, so the balance grows on its own. Check the minimum on your statement.`);
+  }
+  for (const g of st.goals) {
+    const dueM = monthsUntil(g.due); if (dueM === null || !(g.target > 0)) continue;
+    const fin = P.goalDone[g.id];
+    if (fin === undefined || fin > dueM) w.push(`<b>${esc(g.name || "A goal")}</b> is needed by ${monthLabel(dueM)}, but at this pace it's funded ${fin === undefined ? "in 30+ years" : "in " + monthLabel(fin)}. ${g.required ? "Consider saving for it out of order, before the step that's blocking it, or" : "Mark it <i>Required soon</i>, or"} move the date.`);
+  }
+  if (st.iraOn && st.gross >= L.rothSingle[0]) w.push(`At ${fmt(st.gross)} income, direct <b>Roth</b> IRA contributions may be reduced or not allowed (${L.year} phase-out: ${fmt(L.rothSingle[0])}–${fmt(L.rothSingle[1])} single, ${fmt(L.rothJoint[0])}–${fmt(L.rothJoint[1])} married filing jointly). Look up the <i>backdoor Roth</i>, or use a traditional IRA.`);
+  if (!L.exact) w.push(`${YEAR} contribution limits aren't in this calculator yet, so it's using ${L.year} limits. They usually change by a few hundred dollars.`);
+  return w.length ? `<div class="warn"><ul>${w.map((x) => `<li>${x}</li>`).join("")}</ul></div>` : "";
+}
+
+/* What-if: re-run the same projection with more money per month and/or a one-time lump sum. */
+const WHAT = { extra: 0, lump: 0 };   // not saved; it's a scratchpad
+function whatIfCard(P) {
+  return `<section class="card whatif"><h3>What if…</h3><p class="lead">Drag to see how much sooner you'd finish. Nothing here changes your numbers.</p>
+    <div class="wi-controls">
+      <label>Extra each month <span>(raise, side income, cutting costs)</span><b id="wiExtraV">+${fmt(WHAT.extra)}/mo</b>
+        <input type="range" min="0" max="2000" step="50" value="${WHAT.extra}" data-wi="extra" aria-label="Extra each month"/></label>
+      <label>One-time lump sum <span>(tax refund, bonus, gift)</span><b id="wiLumpV">+${fmt(WHAT.lump)}</b>
+        <input type="range" min="0" max="20000" step="250" value="${WHAT.lump}" data-wi="lump" aria-label="One-time lump sum"/></label>
+    </div>
+    <div id="wiBody">${whatIfBody(P)}</div></section>`;
+}
+function whatIfBody(P) {
+  if (!WHAT.extra && !WHAT.lump) return `<p class="empty">Move a slider to compare.</p>`;
+  const Q = project({ ...S, takeHome: S.takeHome + WHAT.extra, cash: S.cash + WHAT.lump });
+  const debtId = P.D.applies.s3c ? "s3c" : P.D.applies.s3a ? "s3a" : null;
+  const lab = (m) => (m === undefined ? "30+ yr" : m === 0 ? "Now" : monthLabel(m));
+  const diff = (a, b) => {
+    if (a === undefined && b === undefined) return "";
+    if (a === undefined) return `<span class="good">within ${dur(b)}</span>`;
+    const d = a - (b ?? Infinity);
+    return d > 0 ? `<span class="good">${d} mo sooner</span>` : d < 0 ? `<span class="bad">${-d} mo later</span>` : "same";
+  };
+  const rows = [
+    debtId ? ["Debt above 4% gone", P.done[debtId], Q.done[debtId]] : null,
+    ["Emergency fund full", P.done.s3b, Q.done.s3b],
+    ["Caught up", P.caught, Q.caught],
+  ].filter(Boolean);
+  const intSaved = P.interest - Q.interest;
+  return `<table class="wi"><thead><tr><th></th><th>Now</th><th>With the change</th><th></th></tr></thead><tbody>
+    ${rows.map(([n, a, b]) => `<tr><td>${n}</td><td>${lab(a)}</td><td><b>${lab(b)}</b></td><td>${diff(a, b)}</td></tr>`).join("")}
+    ${debtId ? `<tr><td>Interest on debt above 4%</td><td>${fmt(P.interest)}</td><td><b>${fmt(Q.interest)}</b></td><td>${intSaved > 0.5 ? `<span class="good">${fmt(intSaved)} less</span>` : "same"}</td></tr>` : ""}
+    </tbody></table>
+    <p class="lead" style="margin:10px 0 0">"Caught up" can jump by several months for a small change. Finishing everything before December beats the January refill of your ${listJoin(P.yearly.map(yearlyName)) || "yearly accounts"}; finishing in January means refilling ${P.yearly.length > 1 ? "them" : "it"} first, because the Prime Directive puts ${P.yearly.length > 1 ? "them" : "it"} ahead of what's left.</p>`;
+}
+
+function timelineHTML(P, order) {
+  const isYearly = (id) => P.yearly.includes(id);
+  const rows = order.filter((s) => P.stepIds.includes(s.id) && (isYearly(s.id) ? P.segs[s.id].length : P.done[s.id] !== undefined && P.done[s.id] > 0));
+  if (!rows.length) return "";
+  const maxM = Math.max(P.endM, 6);
+  const W = 680, rowH = 26, top = 22, left = 170, right = 14, H = top + rows.length * rowH + 8;
+  const x = (m) => left + (Math.min(m, maxM) / maxM) * (W - left - right);
+  const ticks = [];
+  const stepY = maxM > 48 ? 12 : maxM > 18 ? 6 : 3;
+  for (let m = 0; m <= maxM; m += stepY) ticks.push(m);
+  // January lines, so the yearly refills line up with something
+  const jans = [];
+  for (let m = 1; m <= maxM; m++) if (new Date(NOW.getFullYear(), NOW.getMonth() + m, 1).getMonth() === 0) jans.push(m);
+  const color = { pay: "var(--red)", keep: "var(--green)", year: "var(--blue)", save: "var(--blue-2)", work: "var(--gold)", invest: "var(--blue)" };
+  const label = (a, b, y, text) => x(b) <= W - right - 70 ? `<text x="${x(b) + 6}" y="${y + 16}">${text}</text>`
+    : x(b) - x(a) > 80 ? `<text x="${x(b) - 6}" y="${y + 16}" text-anchor="end" style="fill:#fff;font-weight:700">${text}</text>`
+    : `<text x="${x(a) - 6}" y="${y + 16}" text-anchor="end">${text}</text>`;
+  const bars = rows.map((s, i) => {
+    const y = top + i * rowH;
+    const name = `<text class="lbl" x="${left - 8}" y="${y + 15}" text-anchor="end">${s.n} · ${s.t.length > 22 ? s.t.slice(0, 21) + "…" : s.t}</text>`;
+    if (isYearly(s.id)) {
+      const sg = P.segs[s.id];
+      const rects = sg.map((g) => `<rect x="${x(g.a)}" y="${y + 5}" width="${Math.max(5, x(g.b) - x(g.a))}" height="14" rx="5" fill="${color.year}" ${g.open ? 'opacity=".55"' : ""}/>`).join("");
+      // label the first full year in the gap after it, and mark the repeat after the last bar
+      const fi = sg.findIndex((g) => !g.open), first = sg[fi >= 0 ? fi : 0], nxt = sg[(fi >= 0 ? fi : 0) + 1], last = sg[sg.length - 1];
+      const gap = (nxt ? x(nxt.a) : W - right) - x(first.b);
+      const txt = first.open ? "partly filled" : gap > 104 ? `maxed ${monthLabel(first.b)}` : gap > 62 ? MONTHS[new Date(NOW.getFullYear(), NOW.getMonth() + first.b, 1).getMonth()] : "";
+      const rep = sg.length > 1 && x(last.b) < W - right - 40 ? `<text x="${x(last.b) + 6}" y="${y + 16}">↻ yearly</text>` : "";
+      return name + rects + (txt ? `<text x="${x(first.b) + 6}" y="${y + 16}">${txt}</text>` : "") + (last !== first ? rep : "");
+    }
+    const a = P.started[s.id] ?? 0, b = P.done[s.id];
+    return `${name}<rect x="${x(a)}" y="${y + 5}" width="${Math.max(4, x(b) - x(a))}" height="14" rx="5" fill="${color[s.kind]}"/>${label(a, b, y, monthLabel(b))}`;
+  }).join("");
+  const grid = ticks.map((m) => `<line x1="${x(m)}" x2="${x(m)}" y1="${top - 4}" y2="${H - 6}" stroke="var(--line)" stroke-dasharray="3 3"/><text x="${x(m)}" y="12" text-anchor="middle">${m === 0 ? "now" : dur(m)}</text>`).join("")
+    + jans.map((m) => `<line x1="${x(m)}" x2="${x(m)}" y1="${top - 4}" y2="${H - 6}" stroke="var(--blue)" stroke-opacity=".25" stroke-width="1.5"/>`).join("");
+  return `<section class="card"><h3>Timeline</h3><p class="lead">When each step gets money and when it's finished, if your income and expenses stay the same. The faint blue lines are Januaries, when ${listJoin(P.yearly.map(yearlyName))} room comes back and gets refilled before anything below it.</p>
+    <div class="tl-wrap"><svg class="tl" viewBox="0 0 ${W} ${H}" role="img" aria-label="Projected timeline of steps">${grid}${bars}</svg></div>
+    <div class="legend"><span><i style="background:var(--green)"></i>Emergency fund</span><span><i style="background:var(--red)"></i>Debt payoff</span><span><i style="background:var(--blue)"></i>Yearly accounts (repeat each year)</span><span><i style="background:var(--blue-2)"></i>Goals</span></div></section>`;
+}
+
+/* ================= events ================= */
+let raf;
+function liveBits() {
+  document.querySelectorAll("[data-sum]").forEach((e) => (e.textContent = secSummary(e.dataset.sum)));
+  const ml = document.getElementById("minsLine");
+  if (ml) {
+    const mins = S.debts.filter((d) => d.balance > 0).reduce((a, d) => a + (d.min || 0), 0);
+    ml.innerHTML = mins ? `Minimums total <b>${fmt(mins)}/mo</b>. Make sure your essential spending (question 1) includes this.` : "";
+  }
+  S.debts.forEach((d, i) => {
+    const w = document.querySelector(`[data-dwarn="${i}"]`); if (!w) return;
+    const interest = d.balance * d.apr / 1200;
+    w.textContent = d.balance > 0 && d.apr > 0 && (d.min || 0) <= interest ? `⚠ ${fmt(d.min || 0)} doesn't cover ${fmt(interest)}/mo interest` : "";
+  });
+}
+function recalc() { save(); liveBits(); cancelAnimationFrame(raf); raf = requestAnimationFrame(renderResults); }
+function full() { renderInputs(); a11y($("#inputs")); liveBits(); renderResults(); save(); }
+
+// Strip anything that isn't a digit, comma or a single decimal point, keeping the cursor in place.
+function cleanNumber(el) {
+  const v = el.value, pos = el.selectionStart ?? v.length;
+  let out = "", dot = false, before = 0;
+  for (let i = 0; i < v.length; i++) {
+    const ch = v[i], ok = /[0-9,]/.test(ch) || (ch === "." && !dot);
+    if (ch === "." && ok) dot = true;
+    if (ok) { out += ch; if (i < pos) before++; }
+  }
+  if (out !== v) { el.value = out; try { el.setSelectionRange(before, before); } catch (e) {} el.classList.add("nudge"); setTimeout(() => el.classList.remove("nudge"), 400); }
+}
+// Tidy money on leaving the field: 4200 -> 4,200
+document.addEventListener("focusout", (e) => {
+  const el = e.target;
+  if (!el.matches || !el.matches(".money input") || el.value.trim() === "") return;
+  const n = num(el.value); el.value = n.toLocaleString("en-US", { maximumFractionDigits: 2 });
+});
+document.addEventListener("input", (e) => {
+  const t = e.target;
+  if (t.dataset && t.dataset.wi) {
+    WHAT[t.dataset.wi] = +t.value;
+    $("#wiExtraV").textContent = `+${fmt(WHAT.extra)}/mo`; $("#wiLumpV").textContent = `+${fmt(WHAT.lump)}`;
+    $("#wiBody").innerHTML = whatIfBody(project(S));
+    return;
+  }
+  if (t.matches && t.matches(".money input, .pct input")) cleanNumber(t);
+  if (t.dataset.k) {
+    const k = t.dataset.k;
+    S[k] = k.startsWith("lim") && t.value.trim() === "" ? null : Math.max(0, num(t.value));
+    return recalc();
+  }
+  if (t.dataset.debt !== undefined) {
+    const d = S.debts[+t.dataset.debt]; d[t.dataset.f] = t.dataset.f === "name" ? t.value : Math.max(0, num(t.value));
+    const tag = document.querySelector(`[data-tag="${t.dataset.debt}"]`);
+    if (tag) { const c = d.balance > 0 ? (d.apr >= HIGH ? ["hi", "High interest"] : d.apr >= MOD ? ["mid", "Moderate interest"] : ["lo", "Low interest: minimums only"]) : ["", ""]; tag.className = "tag " + c[0]; tag.textContent = c[1]; }
+    return recalc();
+  }
+  if (t.dataset.goal !== undefined) {
+    const g = S.goals[+t.dataset.goal], f = t.dataset.f;
+    if (f === "dueY" || f === "dueMo") {
+      if (!g.dueY && !g.dueMo && g.due) [g.dueY, g.dueMo] = g.due.split("-");   // older saves stored only "YYYY-MM"
+      g[f] = t.value;
+      g.due = g.dueY && g.dueMo ? `${g.dueY}-${g.dueMo}` : "";   // only counts once both are chosen
+      if (!t.parentElement.querySelector("[data-act=due-clear]")) full();
+      return recalc();
+    }
+    g[f] = f === "name" ? t.value : Math.max(0, num(t.value));
+    return recalc();
+  }
+});
+document.addEventListener("click", (e) => {
+  const sb = e.target.closest("[data-seg] button");
+  if (sb) { const k = sb.parentElement.dataset.seg, v = sb.dataset.v; S[k] = v === "true" ? true : v === "false" ? false : isNaN(+v) ? v : +v; return full(); }
+  const gb = e.target.closest("[data-goalseg] button");
+  if (gb) { S.goals[+gb.parentElement.dataset.goalseg].required = gb.dataset.v === "1"; return full(); }
+  const t = e.target.closest("[data-act]"); if (!t) return;
+  const a = t.dataset.act;
+  if (a === "add-debt") { S.debts.push({ id: uid(), name: "", balance: 0, apr: 0, min: 0 }); full(); const ins = document.querySelectorAll('[data-f="name"][data-debt]'); ins[ins.length - 1]?.focus(); }
+  if (a === "rm-debt") { S.debts.splice(+t.dataset.i, 1); full(); }
+  if (a === "add-goal") { S.goals.push({ id: uid(), name: "", target: 0, saved: 0, required: false }); full(); const ins = document.querySelectorAll('[data-f="name"][data-goal]'); ins[ins.length - 1]?.focus(); }
+  if (a === "due-clear") { const g = S.goals[+t.dataset.i]; g.due = ""; g.dueY = ""; g.dueMo = ""; full(); }
+  if (a === "rm-goal") { S.goals.splice(+t.dataset.i, 1); full(); }
+  if (a === "example") loadExample();
+  if (a === "did-today") applyToday();
+  if (a === "undo-today" && UI.undo) { S = JSON.parse(UI.undo); UI.undo = null; full(); $("#toast").classList.remove("show"); toast("Back to your earlier numbers."); }
+  if (a === "match-mode") { S.matchMode = t.dataset.v; full(); }
+  if (a === "lim-open") { S.limOpen.push(t.dataset.v); full(); const el = document.querySelector(`[data-k="${t.dataset.v}"]`); el?.focus(); }
+  if (a === "lim-reset") { S[t.dataset.v] = null; S.limOpen = S.limOpen.filter((k) => k !== t.dataset.v); full(); }
+  if (a === "theme") {
+    const order = ["auto", "dark", "light"], next = order[(order.indexOf(document.documentElement.dataset.theme) + 1) % 3];
+    try { localStorage.setItem("spilloverTheme", next); } catch (err) {}
+    applyTheme(next); toast(THEMES[next][1]); return;
+  }
+  if (a === "menu") { const m = $("#menu"); m.classList.toggle("open"); t.setAttribute("aria-expanded", m.classList.contains("open")); return; }
+  if (t.closest("#menu")) $("#menu").classList.remove("open");
+  if (a === "next") {
+    const id = SCREENS[UI.screen].id;
+    if (id === "budget" && !(S.takeHome > 0 && S.expenses > 0)) { $("#screenErr").textContent = !(S.takeHome > 0) ? "Enter your take-home pay to continue." : "Enter your essential spending to continue."; return; }
+    if (!S.seen.includes(id)) S.seen.push(id);
+    if (UI.screen === SCREENS.length - 1) {
+      S.seen = SECS.map(([k]) => k); S.done = true; UI.editing = false; full(); scrollTo({ top: 0, behavior: "smooth" });
+      toast("Here's your plan");
+    } else { UI.screen++; full(); focusScreen(); }
+  }
+  if (a === "prev") { UI.screen = Math.max(0, UI.screen - 1); full(); focusScreen(); }
+  if (a === "jump") { UI.screen = +t.dataset.i; full(); focusScreen(); }
+  if (a === "edit") {
+    if (isMobile()) UI.drawer = true;
+    else { UI.sideOpen = !UI.sideOpen; try { localStorage.setItem("spilloverSide", UI.sideOpen ? "1" : "0"); } catch (err) {} }
+    full();
+    if (isMobile() || UI.sideOpen) setTimeout(() => $("#side input, #side .seg button")?.focus({ preventScroll: !isMobile() }), 30);
+  }
+  if (a === "side-close") {
+    if (isMobile()) { UI.drawer = false; full(); $("#editBtn").focus(); }
+    else { UI.sideOpen = false; try { localStorage.setItem("spilloverSide", "0"); } catch (err) {} full(); $(".rail")?.focus(); }
+  }
+  if (a === "side-open") {
+    UI.sideOpen = true; try { localStorage.setItem("spilloverSide", "1"); } catch (err) {}
+    full(); setTimeout(() => $("#side [data-act=side-close]")?.focus(), 20);
+  }
+  if (a === "redo") { UI.editing = true; UI.screen = 0; UI.drawer = false; full(); focusScreen(); }
+  if (a === "start") { UI.intro = false; full(); focusScreen(); }
+  if (a === "to-intro") { UI.intro = true; full(); scrollTo({ top: 0, behavior: "smooth" }); }
+  if (a === "done-edit") { UI.editing = false; full(); scrollTo({ top: 0, behavior: "smooth" }); }
+  if (a === "reset") { if (confirmReset()) { S = blank(); UI.screen = 0; UI.editing = false; UI.intro = true; UI.drawer = false; UI.moreOpen.clear(); full(); toast("Cleared"); } }
+  if (a === "export") exportJSON();
+  if (a === "print") { if (!S.done || UI.editing) { toast("Finish the questions first, then print your plan"); return; } window.print(); }
+  if (a === "import") $("#fileIn").click();
+});
+let resetArmed = 0;
+// Appearance: Auto follows the device; Dark and Light override it. Remembered in this browser.
+const THEMES = { auto: [`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>`, "Appearance: matches your device"], dark: [`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg>`, "Appearance: dark"], light: [`<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>`, "Appearance: light"] };
+function applyTheme(t) {
+  document.documentElement.dataset.theme = t;
+  const b = $("#themeBtn"); if (!b) return;
+  b.innerHTML = THEMES[t][0]; b.title = THEMES[t][1] + " (click to change)"; b.setAttribute("aria-label", THEMES[t][1] + ". Click to change.");
+}
+function focusScreen() { scrollTo({ top: 0, behavior: "smooth" }); setTimeout(() => $("#inputs .fields input, #inputs .fields .seg button")?.focus({ preventScroll: true }), 50); }
+// remember which "More options" panels are open across re-renders; close the menu on outside clicks
+document.addEventListener("toggle", (e) => {
+  const d = e.target; if (!d.dataset) return;
+  if (d.dataset.more) d.open ? UI.moreOpen.add(d.dataset.more) : UI.moreOpen.delete(d.dataset.more);
+  if (d.dataset.ss) d.open ? UI.sideSecs.add(d.dataset.ss) : UI.sideSecs.delete(d.dataset.ss);
+}, true);
+document.addEventListener("keydown", (e) => { if (e.key === "Escape" && UI.drawer) { UI.drawer = false; full(); $("#editBtn").focus(); } });
+// crossing the phone/desktop width swaps drawer and sidebar
+let wasMobile = isMobile();
+addEventListener("resize", () => { const m = isMobile(); if (m !== wasMobile) { wasMobile = m; UI.drawer = false; full(); } });
+document.addEventListener("click", (e) => { if (!e.target.closest(".menu")) $("#menu").classList.remove("open"); });
+// printing opens the folded plan sections, then restores them
+let printFolds = [];
+let themeBeforePrint = null;
+addEventListener("beforeprint", () => { themeBeforePrint = document.documentElement.dataset.theme; document.documentElement.dataset.theme = "light"; });
+addEventListener("afterprint", () => { if (themeBeforePrint) document.documentElement.dataset.theme = themeBeforePrint; });
+addEventListener("beforeprint", () => { printFolds = [...document.querySelectorAll("#results details.fold:not([open])")]; printFolds.forEach((d) => (d.open = true)); });
+addEventListener("afterprint", () => { printFolds.forEach((d) => (d.open = false)); });
+function confirmReset() { if (Date.now() - resetArmed < 3000) return true; resetArmed = Date.now(); toast("Click Reset again to clear everything"); return false; }
+$("#fileIn").addEventListener("change", (e) => {
+  const f = e.target.files[0]; if (!f) return; const r = new FileReader();
+  r.onload = () => { try { const d = JSON.parse(r.result); if (d.app !== "spillover") throw 0; S = Object.assign(blank(), d.data); UI.editing = false; UI.screen = 0; UI.intro = !S.done && !S.seen.length; full(); toast("Opened"); } catch (err) { toast("That isn't a Spillover backup"); } };
+  r.readAsText(f); e.target.value = "";
+});
+function exportJSON() {
+  const blob = new Blob([JSON.stringify({ app: "spillover", version: 1, exported: new Date().toISOString(), data: S }, null, 2)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "spillover-backup.json" }); document.body.appendChild(a); a.click(); a.remove();
+}
+let tt; function toast(m, act, label) {
+  const t = $("#toast");
+  t.innerHTML = esc(m) + (act ? `<button class="toast-act" data-act="${act}">${esc(label || "Undo")}</button>` : "");
+  t.classList.add("show"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), act ? 8000 : 2400);
+}
+
+/* "I did these": apply today's moves to the real balances, so the plan moves on to the next step. */
+function applyToday() {
+  const acts = project(S).now.acts.filter((a) => a.type !== "keep");
+  if (!acts.length) return;
+  UI.undo = JSON.stringify(S);
+  const c2 = (n) => Math.round(n * 100) / 100;
+  for (const a of acts) {
+    if (a.type === "work") {
+      if (dollarMode(S)) S.k401Dollar = Math.round(a.target * S.gross / 100); else S.k401Pct = a.target;
+      continue;
+    }
+    S.cash = c2(Math.max(0, S.cash - a.amt));
+    if (a.type === "pay") { const d = S.debts.find((x) => x.id === a.ref); if (d) { d.balance = c2(Math.max(0, d.balance - a.amt)); if (d.balance === 0 && d.min) S.expenses = c2(Math.max(0, S.expenses - d.min)); } }   // a paid-off debt's minimum leaves essentials
+    else if (a.ref) { const g = S.goals.find((x) => x.id === a.ref); if (g) g.saved = c2((g.saved || 0) + a.amt); }
+    else if (a.key === "ira") S.iraYTD = c2((S.iraYTD || 0) + a.amt);
+    else if (a.key === "hsa") S.hsaYTD = c2((S.hsaYTD || 0) + a.amt);
+    else if (a.key === "k529") S.k529YTD = c2((S.k529YTD || 0) + a.amt);
+    // taxable investing (s5 without a plan, s6d) just leaves the cash balance
+  }
+  full();
+  $("#results").scrollIntoView({ behavior: "smooth", block: "start" });
+  toast("Balances updated. Here's your next move.", "undo-today");
+}
+
+function loadExample() {
+  const dd = new Date(); dd.setDate(dd.getDate() + 160);   // certification deadline: 160 days from today
+  const certDue = `${dd.getFullYear()}-${String(dd.getMonth() + 1).padStart(2, "0")}`;
+  S = Object.assign(blank(), {
+    takeHome: 4200, expenses: 2900, gross: 68000, cash: 7200, efMonths: 3, cushion: 2,
+    debts: [
+      { id: uid(), name: "Visa", balance: 3400, apr: 22.9, min: 95 },
+      { id: uid(), name: "Store card", balance: 650, apr: 26.99, min: 35 },
+      { id: uid(), name: "Car loan", balance: 9800, apr: 6.9, min: 310 },
+      { id: uid(), name: "Student loan", balance: 14200, apr: 3.4, min: 150 },
+    ],
+    method: "avalanche", hasPlan: true, matchPct: 4, k401Pct: 4, iraOn: true, iraYTD: 500, done: true, seen: SECS.map(([id]) => id),
+    hdhp: true, hsaFamily: false, hsaEmployer: 500, hsaYTD: 20, kids: true, k529Year: 2500, k529YTD: 58,
+    goals: [
+      { id: uid(), name: "Project management certification", target: 1200, saved: 0, required: true, due: certDue, dueY: certDue.slice(0, 4), dueMo: certDue.slice(5) },
+      { id: uid(), name: "Travel fund", target: 3000, saved: 400, required: false },
+    ],
+  });
+  UI.editing = false; UI.screen = 0;
+  UI.intro = false; UI.drawer = false;
+  full(); scrollTo({ top: 0 }); toast(isMobile() ? "Example loaded. Tap Edit my numbers to change anything" : "Example loaded. Change any number to see the plan update");
+}
+
+function fillLimitText() {
+  const set = (k, v) => document.querySelectorAll(`[data-lim="${k}"]`).forEach((e) => (e.textContent = v));
+  set("ira", `${fmt(L.ira)} in ${L.year}`); set("k401", `${fmt(L.k401)} in ${L.year}`); set("years", KNOWN.join(" and "));
+}
+load(); fillLimitText();
+UI.screen = Math.max(0, SCREENS.findIndex((x) => !S.seen.includes(x.id)));   // pick up where a returning visitor left off
+UI.intro = !S.done && S.seen.length === 0;
+applyTheme(document.documentElement.dataset.theme || "auto");   // pick up where a returning visitor left off
+renderInputs(); a11y($("#inputs")); liveBits(); renderResults();
+</script>
+</body>
+</html>

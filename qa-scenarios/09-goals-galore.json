@@ -1,0 +1,85 @@
+{
+  "app": "next-dollar",
+  "version": 1,
+  "qa": "Due dates (one late, one fine), wants, 529, custom IRA limit, no cushion",
+  "data": {
+    "takeHome": 5600,
+    "expenses": 3400,
+    "gross": 90000,
+    "cash": 12000,
+    "efMonths": 3,
+    "cushion": 0,
+    "debts": [],
+    "method": "avalanche",
+    "hasPlan": true,
+    "matchPct": 4,
+    "k401Pct": 4,
+    "matchMode": "pct",
+    "matchDollar": 0,
+    "k401Dollar": 0,
+    "iraOn": true,
+    "iraYTD": 0,
+    "hdhp": false,
+    "hsaFamily": false,
+    "hsaYTD": 0,
+    "hsaEmployer": 0,
+    "kids": true,
+    "k529Year": 3000,
+    "k529YTD": 0,
+    "goals": [
+      {
+        "id": "a",
+        "name": "Bar exam course",
+        "target": 2500,
+        "saved": 500,
+        "required": true,
+        "due": "2027-02"
+      },
+      {
+        "id": "b",
+        "name": "Laptop for work",
+        "target": 1800,
+        "saved": 0,
+        "required": true,
+        "due": "2028-06"
+      },
+      {
+        "id": "c",
+        "name": "Wedding",
+        "target": 15000,
+        "saved": 2000,
+        "required": false,
+        "due": "2028-09"
+      },
+      {
+        "id": "d",
+        "name": "Down payment",
+        "target": 40000,
+        "saved": 5000,
+        "required": false,
+        "due": ""
+      }
+    ],
+    "ytdYear": 2026,
+    "done": true,
+    "seen": [
+      "budget",
+      "cash",
+      "debts",
+      "retire",
+      "more",
+      "goals"
+    ],
+    "limIra": 8600,
+    "limK401": null,
+    "limHsa": null,
+    "limOpen": []
+  },
+  "qa_expect": [
+    "Hero: step 4a, IRA",
+    "IRA limit is the custom $8,600 every year",
+    "Warning: Bar exam course needed Feb 2027 but funded May 2027",
+    "Laptop (Jun 2028) and Wedding (Sep 2028) have no warning: both funded in time",
+    "Down payment finishes Nov 2030"
+  ]
+}

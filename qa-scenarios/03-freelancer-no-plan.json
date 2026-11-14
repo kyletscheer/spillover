@@ -1,0 +1,52 @@
+{
+  "app": "next-dollar",
+  "version": 1,
+  "qa": "No workplace plan, 6-month fund, 2-month cushion, taxable 15%",
+  "data": {
+    "takeHome": 5200,
+    "expenses": 3100,
+    "gross": 82000,
+    "cash": 9000,
+    "efMonths": 6,
+    "cushion": 2,
+    "debts": [],
+    "method": "avalanche",
+    "hasPlan": false,
+    "matchPct": 0,
+    "k401Pct": 0,
+    "matchMode": "pct",
+    "matchDollar": 0,
+    "k401Dollar": 0,
+    "iraOn": true,
+    "iraYTD": 0,
+    "hdhp": false,
+    "hsaFamily": false,
+    "hsaYTD": 0,
+    "hsaEmployer": 0,
+    "kids": false,
+    "k529Year": 2500,
+    "k529YTD": 0,
+    "goals": [],
+    "ytdYear": 2026,
+    "done": true,
+    "seen": [
+      "budget",
+      "cash",
+      "debts",
+      "retire",
+      "more",
+      "goals"
+    ],
+    "limIra": null,
+    "limK401": null,
+    "limHsa": null,
+    "limOpen": []
+  },
+  "qa_expect": [
+    "Hero: step 3b, Full emergency fund + cushion",
+    "Today: $6,200 in checking (2-month cushion) + $2,800 savings",
+    "Employer match shows 'Doesn't apply'",
+    "Step 5 is a $4,800/yr taxable target (15% of $82k minus $7,500 IRA)",
+    "No warnings"
+  ]
+}

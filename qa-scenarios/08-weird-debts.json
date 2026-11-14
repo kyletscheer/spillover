@@ -1,0 +1,88 @@
+{
+  "app": "next-dollar",
+  "version": 1,
+  "qa": "0% promo, min below interest, $0 balance, APR exactly 10% and 4%, minimums > essentials",
+  "data": {
+    "takeHome": 4000,
+    "expenses": 500,
+    "gross": 60000,
+    "cash": 4000,
+    "efMonths": 3,
+    "cushion": 0,
+    "debts": [
+      {
+        "id": "a",
+        "name": "Promo card",
+        "balance": 2500,
+        "apr": 0,
+        "min": 50
+      },
+      {
+        "id": "b",
+        "name": "Payday loan",
+        "balance": 4000,
+        "apr": 36,
+        "min": 90
+      },
+      {
+        "id": "c",
+        "name": "Paid-off card",
+        "balance": 0,
+        "apr": 19,
+        "min": 25
+      },
+      {
+        "id": "d",
+        "name": "Personal loan",
+        "balance": 6000,
+        "apr": 10,
+        "min": 180
+      },
+      {
+        "id": "e",
+        "name": "Auto loan",
+        "balance": 12000,
+        "apr": 4,
+        "min": 260
+      }
+    ],
+    "method": "avalanche",
+    "hasPlan": true,
+    "matchPct": 0,
+    "k401Pct": 0,
+    "matchMode": "pct",
+    "matchDollar": 0,
+    "k401Dollar": 0,
+    "iraOn": true,
+    "iraYTD": 0,
+    "hdhp": false,
+    "hsaFamily": false,
+    "hsaYTD": 0,
+    "hsaEmployer": 0,
+    "kids": false,
+    "k529Year": 2500,
+    "k529YTD": 0,
+    "goals": [],
+    "ytdYear": 2026,
+    "done": true,
+    "seen": [
+      "budget",
+      "cash",
+      "debts",
+      "retire",
+      "more",
+      "goals"
+    ],
+    "limIra": null,
+    "limK401": null,
+    "limHsa": null,
+    "limOpen": []
+  },
+  "qa_expect": [
+    "Hero: step 3a",
+    "Today: pay $3,000 on Payday loan (36%) first",
+    "Personal loan at exactly 10% counts as high-interest; Auto loan at exactly 4% as moderate; 0% promo card is minimums only; $0 card ignored",
+    "Warnings: essentials below $580 of minimums; payday minimum doesn't cover interest",
+    "Payoff order: Payday \u2192 Personal \u2192 Auto"
+  ]
+}

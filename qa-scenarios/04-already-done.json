@@ -1,0 +1,51 @@
+{
+  "app": "next-dollar",
+  "version": 1,
+  "qa": "Everything already funded: should land on 6d with nothing blocked",
+  "data": {
+    "takeHome": 9000,
+    "expenses": 4000,
+    "gross": 150000,
+    "cash": 60000,
+    "efMonths": 3,
+    "cushion": 1,
+    "debts": [],
+    "method": "avalanche",
+    "hasPlan": true,
+    "matchPct": 4,
+    "k401Pct": 12,
+    "matchMode": "pct",
+    "matchDollar": 0,
+    "k401Dollar": 0,
+    "iraOn": true,
+    "iraYTD": 7500,
+    "hdhp": true,
+    "hsaFamily": false,
+    "hsaYTD": 4400,
+    "hsaEmployer": 0,
+    "kids": false,
+    "k529Year": 2500,
+    "k529YTD": 0,
+    "goals": [],
+    "ytdYear": 2026,
+    "done": true,
+    "seen": [
+      "budget",
+      "cash",
+      "debts",
+      "retire",
+      "more",
+      "goals"
+    ],
+    "limIra": null,
+    "limK401": null,
+    "limHsa": null,
+    "limOpen": []
+  },
+  "qa_expect": [
+    "Hero: 6d, Every step is done. Invest the rest.",
+    "Today: invest $44,000 ($60k minus $16k set aside)",
+    "Every step \u2713; caught up Now",
+    "No warnings"
+  ]
+}

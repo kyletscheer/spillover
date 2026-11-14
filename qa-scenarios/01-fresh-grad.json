@@ -1,0 +1,52 @@
+{
+  "app": "next-dollar",
+  "version": 1,
+  "qa": "Simple: first job, little cash, no debt, unclaimed match",
+  "data": {
+    "takeHome": 3000,
+    "expenses": 2200,
+    "gross": 52000,
+    "cash": 500,
+    "efMonths": 3,
+    "cushion": 1,
+    "debts": [],
+    "method": "avalanche",
+    "hasPlan": true,
+    "matchPct": 3,
+    "k401Pct": 0,
+    "matchMode": "pct",
+    "matchDollar": 0,
+    "k401Dollar": 0,
+    "iraOn": true,
+    "iraYTD": 0,
+    "hdhp": false,
+    "hsaFamily": false,
+    "hsaYTD": 0,
+    "hsaEmployer": 0,
+    "kids": false,
+    "k529Year": 2500,
+    "k529YTD": 0,
+    "goals": [],
+    "ytdYear": 2026,
+    "done": true,
+    "seen": [
+      "budget",
+      "cash",
+      "debts",
+      "retire",
+      "more",
+      "goals"
+    ],
+    "limIra": null,
+    "limK401": null,
+    "limHsa": null,
+    "limOpen": []
+  },
+  "qa_expect": [
+    "Hero: step 1, Starter emergency fund + cushion",
+    "Today: keep $500 in checking; cushion $1,700 to go",
+    "Step 1 target $4,400 ($2,200 starter + $2,200 cushion), done Apr 2027",
+    "Match (3%) gets set once step 1 is done",
+    "No warnings"
+  ]
+}

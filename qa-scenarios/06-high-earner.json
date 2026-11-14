@@ -1,0 +1,60 @@
+{
+  "app": "next-dollar",
+  "version": 1,
+  "qa": "$400k income: Roth warning, 401(k) catch-up limit, family HSA with employer money, 529",
+  "data": {
+    "takeHome": 21000,
+    "expenses": 9500,
+    "gross": 400000,
+    "cash": 25000,
+    "efMonths": 3,
+    "cushion": 2,
+    "debts": [
+      {
+        "id": "a",
+        "name": "Mortgage-free HELOC",
+        "balance": 18000,
+        "apr": 8.25,
+        "min": 350
+      }
+    ],
+    "method": "avalanche",
+    "hasPlan": true,
+    "matchPct": 6,
+    "k401Pct": 6,
+    "matchMode": "pct",
+    "matchDollar": 0,
+    "k401Dollar": 0,
+    "iraOn": true,
+    "iraYTD": 0,
+    "hdhp": true,
+    "hsaFamily": true,
+    "hsaYTD": 0,
+    "hsaEmployer": 1500,
+    "kids": true,
+    "k529Year": 6000,
+    "k529YTD": 0,
+    "goals": [],
+    "ytdYear": 2026,
+    "done": true,
+    "seen": [
+      "budget",
+      "cash",
+      "debts",
+      "retire",
+      "more",
+      "goals"
+    ],
+    "limIra": null,
+    "limK401": 32500,
+    "limHsa": null,
+    "limOpen": []
+  },
+  "qa_expect": [
+    "Hero: step 3b",
+    "Roth income warning shown",
+    "Retirement to 15%: 401(k) target 7.2% (15% minus the 6% employer match and the $7,500 IRA); done within ~6 months",
+    "HSA: $7,250 your share (family $8,750 minus $1,500 employer)",
+    "529 step applies; caught up within ~6 months"
+  ]
+}

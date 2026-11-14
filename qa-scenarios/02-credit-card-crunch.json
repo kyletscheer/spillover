@@ -1,0 +1,74 @@
+{
+  "app": "next-dollar",
+  "version": 1,
+  "qa": "Three credit cards, snowball method, thin cash",
+  "data": {
+    "takeHome": 3800,
+    "expenses": 2900,
+    "gross": 58000,
+    "cash": 1800,
+    "efMonths": 3,
+    "cushion": 1,
+    "debts": [
+      {
+        "id": "a",
+        "name": "Chase",
+        "balance": 5200,
+        "apr": 24.99,
+        "min": 130
+      },
+      {
+        "id": "b",
+        "name": "Discover",
+        "balance": 900,
+        "apr": 21.5,
+        "min": 35
+      },
+      {
+        "id": "c",
+        "name": "Amex",
+        "balance": 2400,
+        "apr": 27.2,
+        "min": 70
+      }
+    ],
+    "method": "snowball",
+    "hasPlan": true,
+    "matchPct": 5,
+    "k401Pct": 5,
+    "matchMode": "pct",
+    "matchDollar": 0,
+    "k401Dollar": 0,
+    "iraOn": true,
+    "iraYTD": 0,
+    "hdhp": false,
+    "hsaFamily": false,
+    "hsaYTD": 0,
+    "hsaEmployer": 0,
+    "kids": false,
+    "k529Year": 2500,
+    "k529YTD": 0,
+    "goals": [],
+    "ytdYear": 2026,
+    "done": true,
+    "seen": [
+      "budget",
+      "cash",
+      "debts",
+      "retire",
+      "more",
+      "goals"
+    ],
+    "limIra": null,
+    "limK401": null,
+    "limHsa": null,
+    "limOpen": []
+  },
+  "qa_expect": [
+    "Hero: step 1",
+    "Snowball pays Discover \u2192 Amex \u2192 Chase (smallest balance first)",
+    "High-interest debt gone Dec 2027",
+    "Match already met (5% = 5%)",
+    "No warnings"
+  ]
+}
